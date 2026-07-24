@@ -1,0 +1,16 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Sage — primary" subtitle="The brand green, sampled from the logo script" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;background:var(--surface-canvas);font-family:var(--font-sans);color:var(--text-body)}
+  .grid{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;padding:22px 24px}
+  .sw{border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-xs);border:1px solid rgba(62,70,55,.06)}
+  .chip{height:66px}
+  .meta{padding:7px 8px;background:var(--surface-card-hi)}
+  .tok{font-size:11px;font-weight:700;color:var(--ink-700)}
+  .hex{font-family:var(--font-mono);font-size:10.5px;color:var(--ink-400);text-transform:uppercase}
+</style></head>
+<body><div class="grid" id="g"></div>
+<script>
+const S=[['700','#5E6E44'],['600','#6E7E52'],['500','#8A9A6B'],['400','#A3B187'],['300','#C2CBAF'],['200','#DCE2CF'],['100','#ECEFE2'],['50','#F4F6EE']];
+document.getElementById('g').innerHTML=S.map(([n,h])=>`<div class="sw"><div class="chip" style="background:${h}"></div><div class="meta"><div class="tok">sage-${n}</div><div class="hex">${h}</div></div></div>`).join('');
+</script></body></html>

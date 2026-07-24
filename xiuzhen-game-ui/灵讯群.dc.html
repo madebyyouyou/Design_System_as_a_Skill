@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="./support.js?v=ios-keyboard-2"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&amp;family=Noto+Serif+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;height:var(--app-height,100vh);overflow:hidden;background:#16140f}
+  body{font-family:'Noto Serif SC',serif;background:#16140f}
+  ::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<div data-screen-label="灵讯群-群聊" style="position:relative;width:100%;min-height:var(--app-height,100vh);display:flex;justify-content:center;background:#16140f">
+<div style="position:relative;width:100%;max-width:440px;height:var(--app-height,100vh);display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(140% 72% at 50% -8%,#fcf9f3 0%,#f4efe4 50%,#ece4d3 100%);box-shadow:0 0 50px rgba(0,0,0,.45)">
+
+  <!-- ===== 背景水墨远山大图 ===== -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url({{ bgUrl }});background-size:cover;background-position:top center;background-repeat:no-repeat;opacity:{{ bgOpacity }}"></div>
+  <!-- 中段提亮：让聊天区纸白，气泡更清晰 -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(250,246,238,0) 14%,rgba(250,246,238,.55) 40%,rgba(250,246,238,.55) 60%,rgba(250,246,238,0) 88%)"></div>
+
+  <!-- ===== 顶栏 + 可下拉群资料面板（编组：桌面悬停/点击，移动端下拉/上滑） ===== -->
+  <div onMouseEnter="{{ onGroupEnter }}" onMouseLeave="{{ onGroupLeave }}" onTouchStart="{{ onTouchStart }}" onTouchMove="{{ onTouchMove }}" style="position:relative;z-index:5">
+  <!-- ===== 顶栏 ===== -->
+  <div style="position:relative;z-index:2;display:flex;align-items:flex-start;justify-content:space-between;padding:18px 18px 0">
+    <div onClick="{{ onTitleClick }}" style="display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none">
+      <!-- 标题字图占位：保留书法字体作临时呈现 -->
+      <div style="font-family:'Ma Shan Zheng',serif;font-size:30px;line-height:.9;color:#2b2924;letter-spacing:3px">灵讯群</div>
+      <div style="width:18px;height:18px;border-radius:50%;border:1.3px solid rgba(70,62,48,.5);display:flex;align-items:center;justify-content:center;font-size:11px;color:#6b655a;margin-top:6px">?</div>
+    </div>
+    <div style="display:flex;gap:16px">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+        <div style="width:34px;height:34px;border:1.4px solid rgba(70,62,48,.5);border-radius:6px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(252,249,243,.4)">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4a443a" stroke-width="1.6" stroke-linecap="round" style="transform:rotate(-45deg)"><circle cx="10.5" cy="10.5" r="6"></circle><line x1="15" y1="15" x2="20" y2="20"></line></svg>
+        </div>
+        <span style="font-size:11px;color:#6b655a;letter-spacing:1px">搜索</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+        <div style="width:34px;height:34px;border:1.4px solid rgba(70,62,48,.5);border-radius:6px;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;background:rgba(252,249,243,.4)">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="#4a443a" style="transform:rotate(-45deg)"><circle cx="5.5" cy="12" r="1.7"></circle><circle cx="12" cy="12" r="1.7"></circle><circle cx="18.5" cy="12" r="1.7"></circle></svg>
+        </div>
+        <span style="font-size:11px;color:#6b655a;letter-spacing:1px">更多</span>
+      </div>
+    </div></div>
+
+  <!-- ===== 可下拉面板：群信息卡 + 群公告（从顶栏下划呼出 / 上划收起） ===== -->
+  <div style="overflow:hidden;transition:max-height .42s cubic-bezier(.33,1,.68,1),opacity .3s ease,transform .3s ease;max-height:{{ panelMax }};opacity:{{ panelOpacity }};transform:{{ panelTransform }}">
+
+  <!-- ===== 群信息卡 ===== -->
+  <div style="position:relative;z-index:2;display:flex;gap:13px;align-items:center;padding:0 18px 4px;margin-top:-6px">
+    <div style="flex:0 0 92px;width:92px;height:92px;display:flex;align-items:center;justify-content:center">
+    <div role="img" aria-label="群头像" style="width: 100px; height: 100px; background-image: url({{ avatarUrl }}); background-size: contain; background-position: center; background-repeat: no-repeat; filter: drop-shadow(0 1px 2px rgba(40,30,15,.18))"></div></div>
+    <div style="display:flex;flex-direction:column;gap:1px;padding-top:0">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:18px;font-weight:600;color:#2b2924;letter-spacing:.5px">青云宗 · 同门灵讯群</span>
+      </div>
+      <div style="font-size:12.5px;color:#7a7263;line-height:1.3">群号 668824 · 道友 6/100</div>
+      <div style="font-size:13px;color:#6b655a;letter-spacing:.2px;line-height:1.3">大道朝天，各修一程；唯道友与共。</div>
+    </div>
+  </div>
+
+  <!-- ===== 群公告条（笔刷圈“公告” + 渐浅下划，无包裹框） ===== -->
+  <sc-if value="{{ showAnnouncement }}" hint-placeholder-val="{{ true }}">
+    <div style="position:relative;z-index:2;display:flex;align-items:center;gap:12px;margin:0 20px 2px;padding:2px 2px 6px">
+      <div style="position:relative;flex:0 0 auto;width:48px;height:44px;display:flex;align-items:center;justify-content:center">
+        
+        
+      </div>
+      <div style="position:relative;flex:1;min-width:0;padding-bottom:7px">
+        
+        <sc-if value="{{ ul1 }}" hint-placeholder-val="{{ true }}"><div style="position: absolute; left: -4px; right: 10px; bottom: -5px; height: 10px; background: url(assets/brush/underline-ink.png) left center/100% 100% no-repeat; opacity: .82; pointer-events: none"></div></sc-if>
+        <sc-if value="{{ ul2 }}"><div style="position:absolute;left:-2px;right:14px;bottom:2px;height:2px;background:linear-gradient(90deg,rgba(70,62,48,.55) 0%,rgba(70,62,48,.3) 50%,rgba(70,62,48,0) 100%);border-radius:2px;pointer-events:none"></div></sc-if>
+        <sc-if value="{{ ul3 }}"><div style="position:absolute;left:-2px;right:14px;bottom:1px;height:5px;background:radial-gradient(circle,rgba(70,62,48,.5) 1.2px,transparent 1.5px) left center/9px 5px repeat-x;-webkit-mask:linear-gradient(90deg,#000 45%,transparent 100%);mask:linear-gradient(90deg,#000 45%,transparent 100%);pointer-events:none"></div></sc-if>
+        <sc-if value="{{ ul4 }}"><div style="position:absolute;left:-2px;right:14px;bottom:0;height:6px;pointer-events:none"><div style="position:absolute;left:0;right:0;top:0;border-top:1px solid rgba(70,62,48,.4)"></div><div style="position:absolute;left:0;right:0;bottom:0;border-top:1px solid rgba(70,62,48,.22)"></div><div style="position:absolute;left:50%;top:50%;width:5px;height:5px;background:rgba(150,55,40,.7);transform:translate(-50%,-50%) rotate(45deg)"></div></div></sc-if>
+      <span style="display: block; font-size: 15px; color: #1a2275; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: Ma Shan Zheng">宗门秘境「云渊幻境」本月初七开启，名额有限…</span></div>
+      <span style="flex:0 0 auto;color:#a59c8b;font-size:15px;line-height:1">›</span>
+    <div style="position: absolute; inset: -3px -1px 0; background: url(assets/brush/enso-clean.png) center/100% 100% no-repeat; opacity: .82; width: 68px; height: 68px; left: -1px; top: -5px"><span style="position: absolute; font-family: 'Ma Shan Zheng',serif; font-size: 18px; color: #b13a27; letter-spacing: 1px; left: 10px; top: 19px">公告</span></div></div>
+  </sc-if>
+  </div><!-- /可下拉面板 -->
+  </div><!-- /编组 -->
+
+  <!-- ===== 聊天区 ===== -->
+  <div style="position:relative;z-index:2;flex:1;min-height:0;overflow-y:auto;padding:30px 16px 16px;display:flex;flex-direction:column;gap:18px;-webkit-mask:linear-gradient(180deg,transparent 0,rgba(0,0,0,.15) 22px,rgba(0,0,0,.5) 46px,#000 78px);mask:linear-gradient(180deg,transparent 0,rgba(0,0,0,.15) 22px,rgba(0,0,0,.5) 46px,#000 78px)">
+
+    <!-- 师兄 -->
+    <div style="display:flex;gap:10px;max-width:84%">
+      <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:linear-gradient(160deg,#e9e1d0,#d6cbb3);border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',serif;font-size:23px;color:#4a443a;box-shadow:0 1px 2px rgba(40,30,15,.12)">兄</div>
+      <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font-size:14px;font-weight:600;color:#3a352d">温润师兄</span>
+          <span style="font-size:10.5px;color:#7a7263;background:rgba(120,110,90,.13);border:1px solid rgba(70,62,48,.16);border-radius:4px;padding:1px 6px">外门·医修</span>
+          <span style="font-size:11px;color:#a59c8b">10:21</span>
+        </div>
+        <dc-import name="气泡" tone="医修绿" align="左" hint-size="100%,76px">小师妹，我新得了一株<span style="color:#a9802f;font-weight:600">《九转还魂草》</span>。你那假丹方，要不要换些真材料？<span style="color:#a39a8b">（柔声）</span></dc-import>
+      </div>
+    </div>
+
+    <!-- 剑灵 -->
+    <div style="display:flex;gap:10px;max-width:84%">
+      <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:linear-gradient(160deg,#ecdcd9,#d9b9b3);border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',serif;font-size:23px;color:#7a3b3f;box-shadow:0 1px 2px rgba(40,30,15,.12)">剑</div>
+      <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font-size:14px;font-weight:600;color:#3a352d">本命剑灵</span>
+          <span style="font-size:10.5px;color:#9a4b50;background:rgba(166,75,83,.12);border:1px solid rgba(166,75,83,.28);border-radius:4px;padding:1px 6px">本命剑契</span>
+          <span style="font-size:11px;color:#a59c8b">10:22</span>
+        </div>
+        <dc-import name="气泡" tone="剑契红" align="左" hint-size="100%,76px">换什么换。<span style="color:#a39a8b">（横身一挡）</span>本座的契主，炼的便是<span style="color:#a9802f;font-weight:600">天材地宝</span>——谁敢说半个不字？</dc-import>
+      </div>
+    </div>
+
+    <!-- 师姐 -->
+    <div style="display:flex;gap:10px;max-width:84%">
+      <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:linear-gradient(160deg,#e4e0ea,#c8c0d6);border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',serif;font-size:23px;color:#5b517a;box-shadow:0 1px 2px rgba(40,30,15,.12)">姐</div>
+      <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+        <div style="display: flex; align-items: center; gap: 7px; position: relative">
+          <span style="font-size:14px;font-weight:600;color:#3a352d">寡言师姐</span>
+          <span style="font-size:10.5px;color:#7a7263;background:rgba(120,110,90,.13);border:1px solid rgba(70,62,48,.16);border-radius:4px;padding:1px 6px">墨家·机关</span>
+          <span style="font-size:11px;color:#a59c8b">10:24</span>
+        </div>
+        <dc-import name="气泡" tone="机关紫" align="左" hint-size="100%,76px">……护身机关，改好了。原理是……<span style="color:#a39a8b">（把图纸递过去）</span></dc-import>
+      </div>
+    </div>
+
+    <!-- 我（小师妹） -->
+    <div style="display:flex;flex-direction:row-reverse;gap:10px;max-width:84%;align-self:flex-end">
+      <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:linear-gradient(160deg,#dde9df,#bcd6c4);border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',serif;font-size:23px;color:#36634c;box-shadow:0 1px 2px rgba(40,30,15,.12)">我</div>
+      <div style="display:flex;flex-direction:column;gap:5px;min-width:0;align-items:flex-end">
+        <div style="display:flex;align-items:center;gap:7px;flex-direction:row-reverse">
+          <span style="font-size:14px;font-weight:600;color:#3a352d">小师妹</span>
+          <span style="font-size:10.5px;color:#3a7a5e;background:rgba(63,125,110,.12);border:1px solid rgba(63,125,110,.28);border-radius:4px;padding:1px 6px">外门·三阶</span>
+          <span style="font-size:11px;color:#a59c8b">10:25</span>
+        </div>
+        <dc-import name="气泡" tone="师妹金" align="右" hint-size="100%,76px">好呀~今晚月下论道，谁输了谁请<span style="color:#a9802f;font-weight:600">灵石</span>。<span style="color:#a39a8b">（晃了晃手里的假丹药）</span></dc-import>
+      </div>
+    </div>
+
+    <!-- 系统消息 -->
+    <div style="align-self:center;max-width:90%;text-align:center;font-size:12px;color:#8a8273;background:rgba(70,62,48,.06);border:1px solid rgba(70,62,48,.12);border-radius:8px;padding:5px 12px;line-height:1.55">【系统】剑灵 将「小师妹」的群备注改为 <span style="color:#9a6a3a">本座的契主</span></div>
+
+    <!-- 师尊 -->
+    <div style="display:flex;gap:10px;max-width:84%">
+      <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;background:linear-gradient(160deg,#dee2ec,#bcc3d8);border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',serif;font-size:23px;color:#43507a;box-shadow:0 1px 2px rgba(40,30,15,.12)">尊</div>
+      <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+        <div style="display:flex;align-items:center;gap:7px">
+          <span style="font-size:14px;font-weight:600;color:#3a352d">清冷师尊</span>
+          <span style="font-size:10.5px;color:#4a5594;background:rgba(91,107,158,.12);border:1px solid rgba(91,107,158,.28);border-radius:4px;padding:1px 6px">清虚峰·主</span>
+          <span style="font-size:11px;color:#a59c8b">10:26</span>
+        </div>
+        <dc-import name="气泡" tone="师尊青" align="左" hint-size="100%,76px">胡闹。<span style="color:#a39a8b">（顿了顿）</span>……夜深了，早些歇息。</dc-import>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== 右侧吊坠垂挂工具栏（美术资产） ===== -->
+  <sc-if value="{{ showPendant }}" hint-placeholder-val="{{ true }}">
+    <div onMouseDown="{{ onPendantMouseDown }}" onTouchStart="{{ onPendantDown }}" onTouchMove="{{ onPendantMove }}" onTouchEnd="{{ onPendantUp }}" style="position:absolute;right:-14px;top:110px;z-index:20;width:86px;filter:drop-shadow(0 5px 11px rgba(40,30,15,.2));transform:{{ pendantTransform }};transition:transform .42s cubic-bezier(.33,1,.68,1);touch-action:pan-y">
+      
+      <!-- 可点击热区（逆序堆叠在四个玉盘上，供交互时接入） -->
+      <a style="position:absolute;left:11%;width:40%;top:13%;height:11%;border-radius:50%;cursor:pointer;z-index:2" title="群公告"></a>
+      <a style="position:absolute;left:11%;width:40%;top:29%;height:11%;border-radius:50%;cursor:pointer;z-index:2" title="成员"></a>
+      <a style="position:absolute;left:11%;width:40%;top:45%;height:11%;border-radius:50%;cursor:pointer;z-index:2" title="群事件"></a>
+      <a style="position:absolute;left:11%;width:40%;top:61%;height:11%;border-radius:50%;cursor:pointer;z-index:2" title="设置"></a>
+    <img src="assets/ui/pendant-toolbar-trim.png" alt="吊坠工具栏" style="display:block;width:100%;height:auto"></div>
+    <!-- 右边缘手势捕捉区：左划呼出吊坠工具栏 -->
+    <div onMouseDown="{{ onEdgeMouseDown }}" onTouchStart="{{ onEdgeDown }}" onTouchMove="{{ onEdgeMove }}" onTouchEnd="{{ onEdgeUp }}" style="position:absolute;right:0;top:90px;bottom:90px;width:22px;z-index:18;pointer-events:{{ edgePE }};touch-action:pan-y"></div>
+  </sc-if>
+
+  <!-- ===== 底部输入条 ===== -->
+  <div style="position:relative;z-index:3;display:flex;align-items:center;gap:9px;padding:10px 13px 15px;background:linear-gradient(180deg,rgba(248,244,236,.35),rgba(243,237,226,.94));border-top:1px solid rgba(70,62,48,.2)">
+    <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(70,62,48,.3);background:rgba(255,253,247,.5);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 2px rgba(40,30,15,.08);display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a544a" stroke-width="1.5" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M6 11 a6 6 0 0 0 12 0"></path><path d="M12 17 V20.5"></path></svg>
+    </div>
+    <div style="flex:1;height:42px;border:1px solid rgba(70,62,48,.3);border-radius:21px;background:rgba(255,253,247,.5);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);display:flex;align-items:center;padding:0 16px;color:#a59c8b;font-size:14px;letter-spacing:.5px">输入灵讯…</div>
+    <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(70,62,48,.3);background:rgba(255,253,247,.5);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 2px rgba(40,30,15,.08);display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a544a" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="8"></circle><circle cx="9" cy="10" r="1" fill="#5a544a" stroke="none"></circle><circle cx="15" cy="10" r="1" fill="#5a544a" stroke="none"></circle><path d="M8.5 14.5 a4 4 0 0 0 7 0"></path></svg>
+    </div>
+    <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(70,62,48,.3);background:rgba(255,253,247,.5);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 2px rgba(40,30,15,.08);display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5a544a" stroke-width="1.6" stroke-linecap="round"><path d="M12 5 V19"></path><path d="M5 12 H19"></path></svg>
+    </div>
+    <div style="flex:0 0 40px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(70,62,48,.34);background:rgba(255,253,247,.55);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 2px rgba(40,30,15,.1)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4a443a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19 V6"></path><path d="M6 11 L12 5 L18 11"></path></svg>
+    </div>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900},&quot;bgChoice&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;远山·楼阁瀑布&quot;,&quot;江畔·飞鹤梅枝&quot;],&quot;default&quot;:&quot;远山·楼阁瀑布&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;avatarChoice&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;团扇·远山&quot;,&quot;云海·琼楼&quot;,&quot;异形·仙山&quot;,&quot;烟雨·扁舟&quot;],&quot;default&quot;:&quot;烟雨·扁舟&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;underlineStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;枯笔·浓淡&quot;,&quot;淡墨·渐隐&quot;,&quot;墨点·虚线&quot;,&quot;双线·菱点&quot;],&quot;default&quot;:&quot;枯笔·浓淡&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bgOpacity&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.3,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;showPendant&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showAnnouncement&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { open: false, pinned: false, pendantOpen: false };
+  isDesktop = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  onGroupEnter = () => { if (this.isDesktop && !this.state.pinned) this.setState({ open: true }); };
+  onGroupLeave = () => { if (this.isDesktop && !this.state.pinned) this.setState({ open: false }); };
+  onTitleClick = () => {
+    if (this.isDesktop) {
+      if (this.state.pinned) this.setState({ open: false, pinned: false });
+      else this.setState({ open: true, pinned: true });
+    } else {
+      this.setState((s) => ({ open: !s.open, pinned: false }));
+    }
+  };
+  onEdgeDown = (e) => { this._ex = (e.touches ? e.touches[0] : e).clientX; };
+  onEdgeMove = (e) => {
+    if (this._ex == null) return;
+    const x = (e.touches ? e.touches[0] : e).clientX;
+    if (this._ex - x > 26) { this.setState({ pendantOpen: true }); this._ex = null; }
+  };
+  onEdgeUp = () => { this._ex = null; };
+  onPendantDown = (e) => { this._px = (e.touches ? e.touches[0] : e).clientX; };
+  onPendantMove = (e) => {
+    if (this._px == null) return;
+    const x = (e.touches ? e.touches[0] : e).clientX;
+    if (x - this._px > 26) { this.setState({ pendantOpen: false }); this._px = null; }
+  };
+  onPendantUp = () => { this._px = null; };
+
+  onEdgeMouseDown = (e) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const move = (ev) => { if (startX - ev.clientX > 24) { this.setState({ pendantOpen: true }); cleanup(); } };
+    const cleanup = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', cleanup); };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', cleanup);
+  };
+  onPendantMouseDown = (e) => {
+    const startX = e.clientX;
+    const move = (ev) => { if (ev.clientX - startX > 24) { this.setState({ pendantOpen: false }); cleanup(); } };
+    const cleanup = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', cleanup); };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', cleanup);
+  };
+
+  onTouchStart = (e) => { this._ty = e.touches[0].clientY; };
+  onTouchMove = (e) => {
+    if (this._ty == null) return;
+    const y = e.touches[0].clientY, dy = y - this._ty;
+    if (!this.state.open && dy > 22) { this.setState({ open: true }); this._ty = y; }
+    else if (this.state.open && dy < -22) { this.setState({ open: false, pinned: false }); this._ty = y; }
+  };
+
+  renderVals() {
+    const bg = this.props.bgChoice ?? '远山·楼阁瀑布';
+    const map = {
+      '远山·楼阁瀑布': 'assets/bg/landscape-1.png',
+      '江畔·飞鹤梅枝': 'assets/bg/landscape-2.png',
+    };
+    const av = this.props.avatarChoice ?? '团扇·远山';
+    const avMap = {
+      '团扇·远山': 'assets/avatars/group-avatar-1.png',
+      '云海·琼楼': 'assets/avatars/group-avatar-2.png',
+      '异形·仙山': 'assets/avatars/group-avatar-3.png',
+      '烟雨·扁舟': 'assets/avatars/group-avatar-4.png',
+    };
+    const ul = this.props.underlineStyle ?? '枯笔·浓淡';
+    const open = this.state.open;
+    return {
+      open,
+      panelMax: open ? '480px' : '0px',
+      panelOpacity: open ? 1 : 0,
+      panelTransform: open ? 'translateY(0)' : 'translateY(-6px)',
+      hintText: open ? '上滑收起' : (this.isDesktop ? '悬停展开 · 点击固定' : '下拉展开'),
+      onGroupEnter: this.onGroupEnter,
+      onGroupLeave: this.onGroupLeave,
+      onTitleClick: this.onTitleClick,
+      onTouchStart: this.onTouchStart,
+      onTouchMove: this.onTouchMove,
+      pendantOpen: this.state.pendantOpen,
+      pendantTransform: this.state.pendantOpen ? 'translateX(0)' : 'translateX(132%)',
+      edgePE: this.state.pendantOpen ? 'none' : 'auto',
+      onEdgeDown: this.onEdgeDown, onEdgeMove: this.onEdgeMove, onEdgeUp: this.onEdgeUp,
+      onPendantDown: this.onPendantDown, onPendantMove: this.onPendantMove, onPendantUp: this.onPendantUp,
+      onEdgeMouseDown: this.onEdgeMouseDown, onPendantMouseDown: this.onPendantMouseDown,
+      ul1: ul === '枯笔·浓淡', ul2: ul === '淡墨·渐隐', ul3: ul === '墨点·虚线', ul4: ul === '双线·菱点',
+      showPendant: this.props.showPendant ?? true,
+      showAnnouncement: this.props.showAnnouncement ?? true,
+      bgUrl: map[bg] || map['远山·楼阁瀑布'],
+      bgOpacity: this.props.bgOpacity ?? 0.9,
+      avatarUrl: avMap[av] || avMap['团扇·远山'],
+    };
+  }
+}
+</script>
+</body>
+</html>

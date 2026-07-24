@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="./support.js?v=ios-keyboard-2"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&amp;family=Noto+Serif+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;height:var(--app-height,100vh);overflow:hidden;background:#16140f}
+  body{font-family:'Noto Serif SC',serif;background:#16140f}
+  ::-webkit-scrollbar{width:0;height:0}
+  input::placeholder{color:#a59c8b}
+  @keyframes scFadeUp{from{transform:translateY(10px)}to{transform:translateY(0)}}
+  @keyframes scEnso{from{transform:scale(.85) rotate(-7deg)}to{transform:scale(1) rotate(0)}}
+</style>
+</helmet>
+
+<div data-screen-label="灵讯搜索页" style="position:relative;width:100%;min-height:var(--app-height,100vh);display:flex;justify-content:center;background:#16140f">
+<div style="position:relative;width:100%;max-width:440px;height:var(--app-height,100vh);display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(140% 72% at 50% -8%,#fcf9f3 0%,#f4efe4 50%,#ece4d3 100%);box-shadow:0 0 50px rgba(0,0,0,.45)">
+
+  <!-- 背景水墨远山（搜索态压暗、虚化，聚焦在玉简） -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url(assets/bg/landscape-1.png);background-size:cover;background-position:top center;background-repeat:no-repeat;opacity:.42;filter:blur(1.5px)"></div>
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(250,246,238,.35) 0%,rgba(250,246,238,.72) 26%,rgba(250,246,238,.82) 60%,rgba(250,246,238,.6) 100%)"></div>
+
+  <!-- ===== 顶部：返回 + 白玉简搜索框 + 取消 ===== -->
+  <div style="position:relative;z-index:5;display:flex;align-items:center;gap:11px;padding:16px 16px 12px">
+    <div onClick="{{ onBack }}" style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin-left:-5px;cursor:pointer;transition:transform .15s,opacity .15s;user-select:none" style-active="transform:scale(.88)" style-hover="opacity:.62" data-comment-anchor="e0133c8ef6-div"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2b2924" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="6" y2="12"></line><polyline points="11 7 6 12 11 17"></polyline></svg></div>
+
+    <!-- 白玉简：双端缺口 + 玉质斜光 + 阴刻搜寻纹 -->
+    <div onClick="{{ onFieldClick }}" style="position:relative;flex:1;min-width:0;height:46px;border-radius:23px;background:rgba(255,255,255,.5);backdrop-filter:blur(16px) saturate(1.25);-webkit-backdrop-filter:blur(16px) saturate(1.25);border:1px solid {{ fieldBorder }};box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 4px 16px rgba(60,55,45,.1);display:flex;align-items:center;gap:9px;padding:0 16px 0 17px;cursor:text;transition:border-color .25s,box-shadow .25s" data-comment-anchor="57af6c2921-div">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#6b655a" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><circle cx="10.5" cy="10.5" r="6"></circle><line x1="15" y1="15" x2="20" y2="20"></line></svg>
+      <input value="{{ query }}" onChange="{{ onInput }}" onKeyDown="{{ onKey }}" onFocus="{{ onFocus }}" onBlur="{{ onBlur }}" placeholder="搜寻灵讯…" inputRef="{{ inputRef }}" style="flex:1;min-width:0;border:none;background:transparent;outline:none;font-family:'Noto Serif SC',serif;font-size:15px;color:#2b2924;letter-spacing:.5px;padding:0">
+      <sc-if value="{{ hasQuery }}" hint-placeholder-val="{{ true }}">
+        <div onClick="{{ onClear }}" style="flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:rgba(70,62,48,.18);display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fbf8f1" stroke-width="2.6" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>
+        </div>
+      </sc-if>
+    </div>
+
+    <div onClick="{{ onBack }}" style="flex:0 0 auto;cursor:pointer;font-size:14.5px;color:#6b655a;letter-spacing:1px;user-select:none">取消</div>
+  </div>
+
+  <!-- ===== 主体滚动区 ===== -->
+  <div style="position:relative;z-index:2;flex:1;min-height:0;overflow-y:auto;padding:6px 18px 18px">
+
+    <!-- ---------- 初始态 ---------- -->
+    <sc-if value="{{ isInitial }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <!-- 近期寻访 -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:14px 0 13px">
+        <div style="position:relative;display:inline-block">
+          <span style="font-family:'Ma Shan Zheng',serif;font-size:19px;color:#2b2924;letter-spacing:2px">近期寻访</span>
+          <div style="position:absolute;left:-3px;right:-6px;bottom:-7px;height:9px;background:url(assets/brush/underline-ink.png) left center/100% 100% no-repeat;opacity:.7"></div>
+        </div>
+        <span onClick="{{ onClearHistory }}" style="font-size:12.5px;color:#a59c8b;letter-spacing:.5px;cursor:pointer">清空</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px">
+        <sc-for list="{{ recents }}" as="r" hint-placeholder-count="4">
+          <div onClick="{{ r.onTap }}" style="display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:18px;background:rgba(252,249,243,.66);border:1px solid rgba(70,62,48,.2);box-shadow:0 1px 2px rgba(40,30,15,.06);cursor:pointer;font-size:13.5px;color:#4a443a;letter-spacing:.5px;white-space:nowrap">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8a8273" stroke-width="2" stroke-linecap="round" style="flex:0 0 auto"><circle cx="12" cy="12" r="9"></circle><path d="M12 7 V12 L15.5 14"></path></svg>
+            {{ r.word }}
+          </div>
+        </sc-for>
+      </div>
+
+    </div>
+    </sc-if>
+
+    <!-- ---------- 输入中：实时联想 ---------- -->
+    <sc-if value="{{ isTyping }}">
+    <div style="padding-top:6px">
+      <sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="5">
+        <div onClick="{{ s.onTap }}" style="display:flex;align-items:center;gap:11px;padding:13px 4px;border-bottom:1px solid rgba(70,62,48,.1);cursor:pointer;animation:{{ s.anim }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a59c8b" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 auto"><circle cx="10.5" cy="10.5" r="6"></circle><line x1="15" y1="15" x2="20" y2="20"></line></svg>
+          <span style="flex:1;min-width:0;font-size:15px;color:#3a352d;letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+            <sc-for list="{{ s.parts }}" as="p"><sc-if value="{{ p.hit }}"><span style="color:#b13a27;font-weight:600;background:rgba(150,168,118,.28);border-radius:3px;padding:0 1px">{{ p.t }}</span></sc-if><sc-if value="{{ p.miss }}">{{ p.t }}</sc-if></sc-for>
+          </span>
+          <span style="flex:0 0 auto;font-size:12px;color:#a59c8b">{{ s.meta }}</span>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <!-- ---------- 结果列表 ---------- -->
+    <sc-if value="{{ isResults }}">
+    <div>
+      <!-- 分类筛选 -->
+      <div style="display:flex;gap:8px;padding:12px 0 6px;border-bottom:1px solid rgba(70,62,48,.12);margin-bottom:6px;overflow-x:auto;flex-wrap:nowrap" data-comment-anchor="2a2b6fd266-div">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="4">
+          <div onClick="{{ c.onTap }}" style="flex:0 0 auto;white-space:nowrap;padding:5px 13px;border-radius:15px;font-size:13px;letter-spacing:1px;cursor:pointer;border:1px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }}">{{ c.label }}</div>
+        </sc-for>
+      </div>
+      <div style="font-size:12.5px;color:#8a8273;letter-spacing:.5px;padding:6px 2px 4px">于群中觅得 <span style="color:#b13a27;font-weight:600">{{ resultCount }}</span> 条灵讯</div>
+
+      <!-- 结果卡 -->
+      <sc-for list="{{ results }}" as="r" hint-placeholder-count="4">
+        <div onClick="{{ r.onTap }}" style="display:flex;gap:11px;padding:13px 4px;border-bottom:1px solid rgba(70,62,48,.1);cursor:pointer;animation:{{ r.anim }}">
+          <div style="flex:0 0 38px;width:38px;height:38px;border-radius:50%;background:{{ r.avBg }};border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',serif;font-size:21px;color:{{ r.avColor }};box-shadow:0 1px 2px rgba(40,30,15,.12)">{{ r.av }}</div>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">
+            <div style="display:flex;align-items:center;gap:7px">
+              <span style="font-size:13.5px;font-weight:600;color:#3a352d;white-space:nowrap">{{ r.who }}</span>
+              <span style="font-size:10px;color:{{ r.roleColor }};background:{{ r.roleBg }};border:1px solid {{ r.roleBorder }};border-radius:4px;padding:0 5px;white-space:nowrap">{{ r.role }}</span>
+              <span style="flex:1"></span>
+              <span style="font-size:11px;color:#a59c8b;white-space:nowrap">{{ r.time }}</span>
+            </div>
+            <div style="font-size:13.5px;color:#4a443a;line-height:1.6;letter-spacing:.2px">
+              <sc-for list="{{ r.parts }}" as="p"><sc-if value="{{ p.hit }}"><span style="color:#b13a27;font-weight:600;background:rgba(150,168,118,.3);border-radius:3px;padding:0 2px">{{ p.t }}</span></sc-if><sc-if value="{{ p.miss }}">{{ p.t }}</sc-if></sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+
+    <!-- ---------- 空结果 ---------- -->
+    <sc-if value="{{ isEmpty }}">
+    <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:64px">
+      <div style="position:relative;width:128px;height:128px;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+        <div style="position:absolute;inset:0;background:url(assets/brush/enso-clean.png) center/100% 100% no-repeat;opacity:.8;animation:scEnso .55s both" data-comment-anchor="a1d8698e6a-div"></div>
+        <span style="position:relative;font-family:'Ma Shan Zheng',serif;font-size:30px;color:#9a9282;letter-spacing:2px;transform:translate(-7px,-9px)">寻无</span>
+      </div>
+      <div style="font-size:15.5px;color:#4a443a;letter-spacing:.5px;margin-top:6px;line-height:1.7;max-width:280px">遍览群中灵讯，未见「<span style="color:#b13a27;font-weight:600">{{ query }}</span>」踪迹</div>
+      
+      
+    </div>
+    </sc-if>
+
+  </div>
+
+  <!-- ===== 演示态切换（评审用） ===== -->
+  <div style="position:relative;z-index:6;display:flex;gap:4px;padding:8px 14px 14px;border-top:1px solid rgba(70,62,48,.14);background:linear-gradient(180deg,rgba(248,244,236,.2),rgba(243,237,226,.85))">
+    <sc-for list="{{ demoTabs }}" as="d" hint-placeholder-count="4">
+      <div onClick="{{ d.onTap }}" style="flex:1;text-align:center;padding:7px 0;border-radius:9px;font-size:12.5px;letter-spacing:1px;cursor:pointer;background:{{ d.bg }};color:{{ d.color }};border:1px solid {{ d.border }}">{{ d.label }}</div>
+    </sc-for>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { mode: 'initial', query: '', cat: '全部', focused: false };
+  inputRef = (el) => { this._input = el; };
+
+  // ---- 群中可被检索的灵讯历史（含“丹”相关多条） ----
+  people = {
+    兄: { who: '温润师兄', role: '外门·医修', avBg: 'linear-gradient(160deg,#e9e1d0,#d6cbb3)', avColor: '#4a443a', roleColor: '#7a7263', roleBg: 'rgba(120,110,90,.13)', roleBorder: 'rgba(70,62,48,.16)' },
+    我: { who: '小师妹', role: '外门·三阶', avBg: 'linear-gradient(160deg,#dde9df,#bcd6c4)', avColor: '#36634c', roleColor: '#3a7a5e', roleBg: 'rgba(63,125,110,.12)', roleBorder: 'rgba(63,125,110,.28)' },
+    尊: { who: '清冷师尊', role: '清虚峰·主', avBg: 'linear-gradient(160deg,#dee2ec,#bcc3d8)', avColor: '#43507a', roleColor: '#4a5594', roleBg: 'rgba(91,107,158,.12)', roleBorder: 'rgba(91,107,158,.28)' },
+    姐: { who: '寡言师姐', role: '墨家·机关', avBg: 'linear-gradient(160deg,#e4e0ea,#c8c0d6)', avColor: '#5b517a', roleColor: '#7a7263', roleBg: 'rgba(120,110,90,.13)', roleBorder: 'rgba(70,62,48,.16)' },
+    剑: { who: '本命剑灵', role: '本命剑契', avBg: 'linear-gradient(160deg,#ecdcd9,#d9b9b3)', avColor: '#7a3b3f', roleColor: '#9a4b50', roleBg: 'rgba(166,75,83,.12)', roleBorder: 'rgba(166,75,83,.28)' },
+    侠: { who: '不羁游侠', role: '江湖·散修', avBg: 'linear-gradient(160deg,#ece0cf,#dcc6a8)', avColor: '#9a6a3a', roleColor: '#9a6a3a', roleBg: 'rgba(154,106,58,.12)', roleBorder: 'rgba(154,106,58,.28)' },
+  };
+  messages = [
+    { p: '兄', time: '今日 10:21', text: '小师妹，你那假丹方，要不要换些真材料？为兄手里有真的。' },
+    { p: '我', time: '今日 10:25', text: '晃了晃手里的假丹药，先拿这个糊弄人~ 真丹？给你个机会。' },
+    { p: '兄', time: '三日前', text: '这炉丹我守了七七四十九天，临了还是炸了丹炉……心疼。' },
+    { p: '尊', time: '五日前', text: '结丹一关，重在心境。心浮，则丹碎。' },
+    { p: '姐', time: '七日前', text: '……护身机关里嵌了一枚养丹的小灵阵，按图装上便好。' },
+    { p: '剑', time: '旬日前', text: '区区金丹，也敢在本座契主面前称丹道？哼。' },
+    { p: '侠', time: '旬日前', text: '丹房那点破事我最熟——谁要去偿丹？拉上小师妹一起坏笑。' },
+  ];
+  suggestPool = ['假丹方', '九转还魂丹', '丹炉三昧火', '结丹心境', '金丹大道', '养丹灵阵', '九转还魂草', '月下论道', '云渊幻境', '护身机关', '灵石', '天材地宝'];
+  recentWords = ['还魂草', '寡言师姐', '灵石', '月下论道'];
+  trendList = [
+    { word: '云渊幻境 · 秘境名额', count: '128 议', hot: true },
+    { word: '假丹方换真材料', count: '96 议', hot: true },
+    { word: '九转还魂草', count: '74 议', hot: false },
+    { word: '月下论道 · 谁请灵石', count: '53 议', hot: false },
+    { word: '护身机关图纸', count: '41 议', hot: false },
+  ];
+
+  // ---- 文本按 query 切片用于高亮 ----
+  splitParts(text, q) {
+    if (!q) return [{ t: text, hit: false, miss: true }];
+    const parts = []; let i = 0;
+    while (i < text.length) {
+      const idx = text.indexOf(q, i);
+      if (idx === -1) { parts.push({ t: text.slice(i), hit: false, miss: true }); break; }
+      if (idx > i) parts.push({ t: text.slice(i, idx), hit: false, miss: true });
+      parts.push({ t: q, hit: true, miss: false });
+      i = idx + q.length;
+    }
+    return parts;
+  }
+
+  focusInput = () => { setTimeout(() => { if (this._input) this._input.focus(); }, 0); };
+  onFieldClick = () => this.focusInput();
+  onFocus = () => this.setState({ focused: true });
+  onBlur = () => this.setState({ focused: false });
+  onInput = (e) => {
+    const v = e.target.value;
+    this.setState({ query: v, mode: v.trim() ? 'typing' : 'initial' });
+  };
+  onKey = (e) => { if (e.key === 'Enter') this.submit(this.state.query); };
+  submit = (q) => {
+    const query = (q || '').trim();
+    if (!query) { this.setState({ mode: 'initial' }); return; }
+    const hit = this.messages.some((m) => m.text.indexOf(query) !== -1);
+    this.setState({ query, mode: hit ? 'results' : 'empty', cat: '全部' });
+    if (this._input) this._input.blur();
+  };
+  onClear = () => { this.setState({ query: '', mode: 'initial' }); this.focusInput(); };
+  onClearHistory = () => {};
+  onBack = () => { this.setState({ query: '', mode: 'initial', focused: false }); };
+  tapWord = (w) => { this.setState({ query: w }); this.submit(w); };
+  setCat = (c) => this.setState({ cat: c });
+  setDemo = (mode) => {
+    if (mode === 'initial') this.setState({ mode, query: '' });
+    else if (mode === 'typing') this.setState({ mode, query: '丹' });
+    else if (mode === 'results') this.setState({ mode, query: '丹', cat: '全部' });
+    else if (mode === 'empty') this.setState({ mode, query: '鎏金丹' });
+  };
+
+  renderVals() {
+    const { mode, query, cat } = this.state;
+    const q = query.trim();
+
+    const recents = this.recentWords.map((w) => ({ word: w, onTap: () => this.tapWord(w) }));
+    const rankColors = ['#b13a27', '#c2742e', '#a9802f', '#8a8273', '#8a8273'];
+    const trendings = this.trendList.map((t, i) => ({
+      ...t, rank: ['壹', '贰', '叁', '肆', '伍'][i], rankColor: rankColors[i],
+      onTap: () => this.tapWord(t.word.replace(/ ·.*$/, '').replace(/ /g, '')),
+    }));
+
+    const sugWords = q ? this.suggestPool.filter((w) => w.indexOf(q) !== -1).slice(0, 7) : [];
+    const suggestions = sugWords.map((w, i) => {
+      const cnt = this.messages.filter((m) => m.text.indexOf(w) !== -1).length;
+      return {
+        parts: this.splitParts(w, q),
+        meta: (5 + ((w.length * 7) % 40)) + ' 条',
+        anim: `scFadeUp .34s ${i * 0.035}s both`,
+        onTap: () => this.submit(w),
+      };
+    });
+
+    const matched = this.messages.filter((m) => q && m.text.indexOf(q) !== -1);
+    const shown = matched.filter((m) => cat === '全部' || m.p === cat);
+    const results = shown.map((m, i) => {
+      const p = this.people[m.p];
+      return {
+        ...p, av: m.p, time: m.time,
+        parts: this.splitParts(m.text, q),
+        anim: `scFadeUp .34s ${i * 0.045}s both`,
+        onTap: () => {},
+      };
+    });
+
+    const catOrder = ['兄', '我', '尊', '姐', '剑', '侠'];
+    const catDefs = [{ label: '全部', key: '全部' }].concat(
+      catOrder.map((k) => ({ label: this.people[k].who, key: k }))
+    );
+    const cats = catDefs.map((c) => {
+      const on = c.key === cat;
+      return {
+        label: c.label,
+        onTap: () => this.setCat(c.key),
+        bg: on ? 'rgba(95,110,85,.16)' : 'rgba(252,249,243,.5)',
+        color: on ? '#3a4a2c' : '#7a7263',
+        border: on ? 'rgba(95,110,85,.5)' : 'rgba(70,62,48,.18)',
+      };
+    });
+
+    const demoDefs = [['初始', 'initial'], ['输入中', 'typing'], ['结果', 'results'], ['空结果', 'empty']];
+    const demoTabs = demoDefs.map(([label, m]) => {
+      const on = mode === m;
+      return {
+        label, onTap: () => this.setDemo(m),
+        bg: on ? 'rgba(43,41,36,.9)' : 'rgba(252,249,243,.55)',
+        color: on ? '#f4efe4' : '#6b655a',
+        border: on ? 'rgba(43,41,36,.9)' : 'rgba(70,62,48,.2)',
+      };
+    });
+
+    return {
+      query, hasQuery: !!query,
+      isInitial: mode === 'initial', isTyping: mode === 'typing',
+      isResults: mode === 'results', isEmpty: mode === 'empty',
+      fieldBorder: this.state.focused ? 'rgba(70,62,48,.45)' : 'rgba(70,62,48,.26)',
+      onBack: this.onBack, onFieldClick: this.onFieldClick, onInput: this.onInput,
+      onKey: this.onKey, onFocus: this.onFocus, onBlur: this.onBlur,
+      onClear: this.onClear, onClearHistory: this.onClearHistory, inputRef: this.inputRef,
+      recents, trendings, suggestions, results, cats, demoTabs,
+      resultCount: shown.length,
+    };
+  }
+}
+</script>
+</body>
+</html>

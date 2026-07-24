@@ -1,0 +1,61 @@
+<!-- @dsCard group="Brand" viewport="1180x780" name="Scrapbook palettes" subtitle="40 hand-drawn PNG motifs · 4 colorways, each with a 祐 seal" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<title>Scrapbook palettes — 祐识</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body{margin:0;background:var(--surface-canvas)}
+  .sheet{padding:26px 30px 22px}
+  .head{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
+  .head h2{font-size:21px}
+  .head .cn{font-family:var(--font-hand);font-size:22px;color:var(--sage-600)}
+  .sub{font-size:13px;color:var(--text-muted);margin:0 0 18px;max-width:760px;line-height:1.5}
+  .panel{background:var(--surface-card-hi);border:1px solid var(--border-hair);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);padding:14px 16px 16px}
+  .grid{display:grid;grid-template-columns:172px repeat(11,minmax(0,1fr))}
+  .ch{display:flex;align-items:flex-end;justify-content:center;text-align:center;font-family:var(--font-mono);font-size:9.5px;line-height:1.25;letter-spacing:.02em;color:var(--text-faint);padding:0 2px 8px;min-height:30px}
+  .corner{grid-column:1;display:flex;align-items:flex-end;padding-bottom:8px}
+  .corner .eb{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
+  .row{display:grid;grid-template-columns:172px repeat(11,minmax(0,1fr));border-top:1px dashed var(--border-hair)}
+  .rh{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:12px 14px 12px 4px;border-right:1px dashed var(--border-hair)}
+  .rh .nm{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:700;font-size:14.5px;color:var(--text-strong)}
+  .rh .dot{width:14px;height:14px;border-radius:50%;flex:none;box-shadow:var(--shadow-xs)}
+  .rh .slug{font-family:var(--font-mono);font-size:10px;color:var(--text-faint);letter-spacing:.01em}
+  .cell{display:grid;place-items:center;aspect-ratio:1;padding:9px;background:var(--surface-card);border-radius:var(--radius-sm);margin:6px 4px}
+  .cell img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(62,70,55,.09));transition:transform var(--dur-base,.2s) var(--ease-standard,ease)}
+  .cell:hover img{transform:scale(1.14)}
+  .foot{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:var(--text-faint)}
+  .foot code{font-family:var(--font-mono);font-size:11.5px;background:var(--surface-inset);color:var(--text-muted);padding:2px 7px;border-radius:var(--radius-xs)}
+</style>
+</head><body class="paper-canvas">
+<div class="sheet">
+  <div class="head"><h2>Scrapbook motifs</h2><span class="cn">四种配色</span></div>
+  <p class="sub">Textured hand-drawn PNG stickers with transparent backgrounds — the same ten motifs and a 祐 seal, rendered in four gentle colorways. Scatter them sparingly across paper surfaces for the bullet-journal collage feel.</p>
+  <div class="panel" id="matrix"></div>
+  <div class="foot">Reference <code>assets/decorations/&lt;palette&gt;/NN-name.png</code> — e.g. <code>assets/decorations/sage-green/01-origami-crane.png</code></div>
+</div>
+<script>
+const palettes=[
+  {slug:'sage-green',name:'Sage Green',dot:'#8A9A6B'},
+  {slug:'morning-mist-blue',name:'Morning Mist Blue',dot:'#8196AD'},
+  {slug:'misty-lavender',name:'Misty Lavender',dot:'#8E86B8'},
+  {slug:'dusty-lotus-mauve',name:'Dusty Lotus Mauve',dot:'#B896A0'},
+];
+const motifs=[
+  ['01-origami-crane','crane'],['02-dashed-loop-heart','loop\nheart'],['03-gold-sparkles','sparkles'],
+  ['04-double-hearts','hearts'],['05-botanical-sprig','sprig'],['06-stitched-star','star'],
+  ['07-handdrawn-swoosh','swoosh'],['08-dashed-label-frame','frame'],['09-botanical-corner','corner'],
+  ['10-heart-label','label'],['seal','祐 seal'],
+];
+const base='../../assets/decorations';
+const m=document.getElementById('matrix');
+const hdr=document.createElement('div');hdr.className='grid';
+hdr.innerHTML='<div class="corner"><span class="eb">Palette ↓ · Motif →</span></div>'+
+  motifs.map(([,lbl])=>'<div class="ch">'+lbl.replace(/\n/g,'<br>')+'</div>').join('');
+m.appendChild(hdr);
+for(const p of palettes){
+  const row=document.createElement('div');row.className='row';
+  row.innerHTML='<div class="rh"><span class="nm"><span class="dot" style="background:'+p.dot+'"></span>'+p.name+'</span><span class="slug">'+p.slug+'</span></div>'+
+    motifs.map(([f])=>'<div class="cell"><img src="'+base+'/'+p.slug+'/'+f+'.png" alt="'+p.slug+' '+f+'" loading="lazy"></div>').join('');
+  m.appendChild(row);
+}
+</script>
+</body></html>

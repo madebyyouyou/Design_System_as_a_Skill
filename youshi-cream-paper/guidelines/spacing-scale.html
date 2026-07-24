@@ -1,0 +1,15 @@
+<!-- @dsCard group="Spacing" viewport="700x220" name="Spacing scale" subtitle="4px rhythm · space-1 → space-16" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;background:var(--surface-canvas);font-family:var(--font-sans);color:var(--text-body)}
+  .wrap{padding:18px 26px;display:flex;flex-direction:column;gap:6px}
+  .r{display:flex;align-items:center;gap:12px}
+  .bar{height:14px;background:var(--sage-400);border-radius:3px}
+  .tok{font-family:var(--font-mono);font-size:11px;color:var(--ink-500);width:130px;flex:none}
+  .px{font-family:var(--font-mono);font-size:11px;color:var(--ink-400)}
+</style></head>
+<body><div class="wrap" id="g"></div>
+<script>
+const S=[['space-1',4],['space-2',8],['space-3',12],['space-4',16],['space-5',20],['space-6',24],['space-8',32],['space-10',40],['space-12',48],['space-16',64]];
+document.getElementById('g').innerHTML=S.map(([n,px])=>`<div class="r"><span class="tok">--${n}</span><span class="bar" style="width:${px}px"></span><span class="px">${px}px</span></div>`).join('');
+</script></body></html>

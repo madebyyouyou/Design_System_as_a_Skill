@@ -1,0 +1,61 @@
+<!-- @dsCard group="Components" viewport="700x360" name="Cards, chips & data" subtitle="Card · ActionCard · Chip · Badge · Avatar · Divider" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<title>Display — 祐识</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body{margin:0;background:var(--surface-canvas)}
+  .wrap{padding:24px 26px;display:flex;flex-direction:column;gap:18px}
+  .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .lbl{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px}
+</style>
+</head><body class="paper-canvas">
+<div id="root"></div>
+<script type="text/babel">
+const {Card,ActionCard,Chip,Badge,StatusDot,Avatar,Divider}=window.DesignSystem_4278dc;
+function Demo(){
+  return (<div className="wrap">
+    <div className="grid">
+      <ActionCard icon="code" title="探索并理解代码"/>
+      <ActionCard icon="wrench" title="构建新功能、应用或工具" accent="gold"/>
+      <ActionCard icon="clipboard-check" title="审查代码并提出修改建议" accent="rose"/>
+    </div>
+    <div className="row" style={{alignItems:'stretch'}}>
+      <Card padding="md" tape style={{flex:1,minWidth:200}}>
+        <div className="lbl" style={{marginBottom:6}}>Card · with tape</div>
+        <div style={{color:'var(--text-muted)',fontSize:14}}>浮在宣纸上的卡片，柔和圆角与浅浅的投影。</div>
+      </Card>
+      <Card padding="md" elevation="raised" style={{flex:1,minWidth:200}}>
+        <div className="row">
+          <Avatar name="祐祐" ring status/>
+          <Avatar name="momo" tone="gold"/>
+          <Avatar name="DK" tone="rose" shape="rounded"/>
+          <Divider orientation="vertical" variant="dashed"/>
+          <Badge variant="sage" dot>已完成</Badge>
+          <Badge variant="gold">0/4</Badge>
+        </div>
+      </Card>
+    </div>
+    <div>
+      <div className="lbl">Chips & badges</div>
+      <div className="row">
+        <Chip leftIcon="folder" variant="outline">选择项目</Chip>
+        <Chip leftIcon="lock" variant="soft">完全访问</Chip>
+        <Chip variant="plain">5.6 Sol 中</Chip>
+        <Chip dot dotColor="var(--sage-500)" variant="outline">PORTAL ONLINE</Chip>
+        <Chip onRemove={()=>{}}>千纸鹤</Chip>
+        <Chip variant="gold">灵感</Chip>
+        <Badge variant="solid" dot pulse>在线</Badge>
+        <StatusDot/>
+      </div>
+    </div>
+    <Divider label="今日手账"/>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

@@ -1,0 +1,22 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Gold & rose — accents" subtitle="Mustard sparkles · blush hearts" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;background:var(--surface-canvas);font-family:var(--font-sans);color:var(--text-body)}
+  .wrap{padding:20px 24px;display:flex;flex-direction:column;gap:12px}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .sw{border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-xs);border:1px solid rgba(62,70,55,.06)}
+  .chip{height:44px}
+  .meta{padding:5px 8px;background:var(--surface-card-hi)}
+  .tok{font-size:10.5px;font-weight:700;color:var(--ink-700)}
+  .hex{font-family:var(--font-mono);font-size:10px;color:var(--ink-400);text-transform:uppercase}
+</style></head>
+<body><div class="wrap">
+  <div class="grid" id="gold"></div>
+  <div class="grid" id="rose"></div>
+</div>
+<script>
+const G=[['gold-600','#B39A57'],['gold-500','#C6B275'],['gold-400','#D6C591'],['gold-300','#E4D8B4'],['gold-200','#EFE7CF']];
+const R=[['rose-600','#C58E86'],['rose-500','#D6AAA3'],['rose-400','#E3BFB9'],['rose-300','#EDD2CD'],['rose-200','#F5E5E2']];
+const draw=(id,arr)=>document.getElementById(id).innerHTML=arr.map(([n,h])=>`<div class="sw"><div class="chip" style="background:${h}"></div><div class="meta"><div class="tok">${n}</div><div class="hex">${h}</div></div></div>`).join('');
+draw('gold',G);draw('rose',R);
+</script></body></html>

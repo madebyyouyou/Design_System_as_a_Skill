@@ -1,0 +1,43 @@
+/* ============================================================
+   祐识 · 奶油宣纸 — SPACING & SIZING TOKENS
+   4px base rhythm.
+   ============================================================ */
+:root{
+  --space-0:0;
+  --space-px:1px;
+  --space-0-5:2px;
+  --space-1:4px;
+  --space-1-5:6px;
+  --space-2:8px;
+  --space-2-5:10px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-7:28px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+  --space-20:80px;
+  --space-24:96px;
+
+  /* Layout — brand-wide only. Product-specific widths (a desktop
+     sidebar, a mobile column) belong to each product/kit, NOT here.
+     e.g. --sidebar-w / --rightpanel-w now live in ui_kits/youyou-codex. */
+  --page-pad:32px;
+  --gutter:24px;
+  --content-max:1080px;   /* convenience reading max; override per product */
+
+  /* Control heights */
+  --control-sm:30px;
+  --control-md:38px;
+  --control-lg:46px;
+
+  /* Icon sizes */
+  --icon-xs:14px;
+  --icon-sm:16px;
+  --icon-md:20px;
+  --icon-lg:24px;
+  --icon-xl:32px;
+}

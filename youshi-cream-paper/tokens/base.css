@@ -1,0 +1,66 @@
+/* ============================================================
+   祐识 · 奶油宣纸 — BASE ELEMENT STYLES
+   Light resets + brand defaults. Kept minimal; components own
+   their own look. Link colors defined so editor-added links
+   inherit brand color instead of browser blue.
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  font-size:var(--text-base);
+  line-height:var(--leading-normal);
+  color:var(--text-body);
+  background-color:var(--surface-canvas);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* Canvas: cool-ivory page (--paper-page #F5F4EF) + neutral soft-light grain.
+   Grain is texture only — it must not darken or tint the rendered page. */
+.paper-canvas{
+  position:relative;
+  background-color:var(--surface-canvas);
+}
+.paper-canvas::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:var(--paper-grain);
+  opacity:var(--paper-grain-opacity);
+  mix-blend-mode:var(--paper-grain-blend);
+  pointer-events:none;
+  z-index:0;
+}
+.paper-canvas>*{position:relative;z-index:1}
+
+h1,h2,h3,h4,h5{
+  font-family:var(--font-display);
+  color:var(--text-strong);
+  font-weight:var(--weight-bold);
+  line-height:var(--leading-tight);
+  margin:0;
+  text-wrap:balance;
+}
+
+p{margin:0;text-wrap:pretty}
+
+a{color:var(--link);text-decoration:none;transition:color var(--dur-base) var(--ease-standard)}
+a:hover{color:var(--link-hover);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px;text-decoration-style:dotted}
+
+code,kbd,pre,samp{font-family:var(--font-mono);font-size:.92em}
+
+::selection{background:var(--sage-200);color:var(--ink-800)}
+
+:focus-visible{outline:none;box-shadow:var(--shadow-focus);border-radius:var(--radius-sm)}
+
+/* Handwritten annotation helper */
+.hand{font-family:var(--font-hand);font-weight:var(--weight-semibold);color:var(--sage-600);line-height:1.1}
+
+/* Uppercase eyebrow / seal caption */
+.eyebrow{font-size:var(--text-xs);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--text-faint)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}

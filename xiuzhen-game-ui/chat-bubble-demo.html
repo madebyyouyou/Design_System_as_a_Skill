@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聊天气泡 border-image demo</title>
+  <link rel="stylesheet" href="./styles/chat-bubble.css">
+</head>
+<body>
+  <main class="demo-shell">
+    <h1 class="demo-title">聊天气泡九宫格 Demo</h1>
+    <p class="demo-subtitle">底板使用 CSS border-image 拉伸，叠加装饰层使用固定裁切块摆放；调整参数请看 CSS 顶部的变量注释。</p>
+
+    <section class="demo-stack" aria-label="聊天气泡展示">
+      <div class="demo-row">
+        <p class="demo-label">短文本</p>
+        <article class="chat-bubble">
+          <!-- 叠加装饰层：同一张 bubble-decor.png，固定尺寸裁切，不参与九宫格拉伸。 -->
+          <span class="chat-bubble__decor chat-bubble__decor--tassel-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--tassel-second" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--bamboo-top" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--bamboo-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--scene-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--scene-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <p class="chat-bubble__content">风起，回山门。</p>
+        </article>
+      </div>
+
+      <div class="demo-row">
+        <p class="demo-label">三行文本</p>
+        <article class="chat-bubble">
+          <span class="chat-bubble__decor chat-bubble__decor--tassel-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--tassel-second" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--bamboo-top" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--bamboo-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--scene-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--scene-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <p class="chat-bubble__content">
+            今夜灵潮翻涌，山门外雾色极重。<br>
+            你先收好传讯玉牌，莫让外人听去。<br>
+            待子时钟响，我们再去看那道裂隙。
+          </p>
+        </article>
+      </div>
+
+      <div class="demo-row">
+        <p class="demo-label">长文本自动换行</p>
+        <article class="chat-bubble chat-bubble--wide">
+          <span class="chat-bubble__decor chat-bubble__decor--tassel-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--tassel-second" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--bamboo-top" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--bamboo-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--scene-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <span class="chat-bubble__decor chat-bubble__decor--scene-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+          <p class="chat-bubble__content">师姐，我方才在藏经阁后院拾到一枚旧符，符面似有残缺阵纹。若直接以灵火试探，恐怕会惊动守阁禁制；不如先借你那盏照影灯，照出符底暗线，再决定要不要送去器修堂。</p>
+        </article>
+      </div>
+
+      <div class="demo-row">
+        <p class="demo-label">移动端窄屏效果</p>
+        <div class="mobile-preview">
+          <article class="chat-bubble chat-bubble--mobile">
+            <span class="chat-bubble__decor chat-bubble__decor--tassel-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+            <span class="chat-bubble__decor chat-bubble__decor--tassel-second" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+            <span class="chat-bubble__decor chat-bubble__decor--bamboo-top" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+            <span class="chat-bubble__decor chat-bubble__decor--bamboo-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+            <span class="chat-bubble__decor chat-bubble__decor--scene-left" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+            <span class="chat-bubble__decor chat-bubble__decor--scene-right" aria-hidden="true"><img src="./assets/bubbles/bubble-decor.png" alt=""></span>
+            <p class="chat-bubble__content">小师妹，山雨将至，灵舟今晚不渡。若你仍要下山，先来丹房取一枚避瘴丸，再把去向留在群里。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,44 @@
+/* ============================================================
+   祐识 · 奶油宣纸 — EFFECTS: radii, shadows, borders, texture
+   Cards float on the paper with SHALLOW, warm-tinted shadows
+   (green-grey, never pure black). Corners are softly rounded.
+   ============================================================ */
+:root{
+  /* ---- Corner radii ---- */
+  --radius-xs:6px;
+  --radius-sm:10px;
+  --radius-md:14px;    /* inputs, chips-of-content */
+  --radius-lg:18px;    /* buttons-blocks, small cards */
+  --radius-xl:24px;    /* cards */
+  --radius-2xl:32px;   /* hero panels */
+  --radius-pill:999px;
+  --radius-circle:50%;
+
+  /* ---- Borders ---- */
+  --border-1:1px;
+  --border-2:1.5px;
+  --hairline:1px solid var(--border-hair);
+  --hairline-sage:1px solid var(--border-sage);
+  /* dashed connector — the bullet-journal dashed line */
+  --dash-line:1px dashed var(--border-dash);
+  --dash-line-sage:1.5px dashed var(--sage-400);
+
+  /* ---- Shallow, warm shadows (float on paper) ---- */
+  --shadow-xs:0 1px 2px rgba(62,70,55,.06);
+  --shadow-sm:0 2px 6px rgba(62,70,55,.07), 0 1px 2px rgba(62,70,55,.05);
+  --shadow-md:0 6px 16px rgba(62,70,55,.09), 0 2px 5px rgba(62,70,55,.06);
+  --shadow-lg:0 14px 34px rgba(62,70,55,.12), 0 4px 10px rgba(62,70,55,.07);
+  --shadow-xl:0 26px 60px rgba(62,70,55,.16), 0 8px 18px rgba(62,70,55,.08);
+  --shadow-inset:inset 0 1px 2px rgba(62,70,55,.07);
+  --shadow-focus:0 0 0 3px var(--focus-ring);
+
+  /* Card lift on hover */
+  --shadow-hover:0 10px 26px rgba(62,70,55,.13), 0 3px 8px rgba(62,70,55,.07);
+
+  /* ---- Paper grain: NEUTRAL-GREY noise, soft-light blend — adds texture only.
+         Soft-light of mid-grey is identity, so it must NOT shift the page's
+         average lightness or hue (stays --paper-page #F5F4EF). Never multiply. ---- */
+  --paper-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); /* @kind other */
+  --paper-grain-opacity:.045; /* @kind other */
+  --paper-grain-blend:soft-light; /* @kind other */
+}

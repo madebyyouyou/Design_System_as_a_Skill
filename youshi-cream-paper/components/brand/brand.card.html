@@ -1,0 +1,60 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Icons, motifs & logo" subtitle="Icon · Decoration · Logo" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<title>Brand — 祐识</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>window.__YOUYOU_ASSET_BASE__='../../assets';</script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body{margin:0;background:var(--surface-canvas)}
+  .wrap{padding:22px 26px;display:flex;flex-direction:column;gap:16px}
+  .icons{display:flex;flex-wrap:wrap;gap:14px;color:var(--ink-600)}
+  .icons>span{display:flex;align-items:center;justify-content:center;width:34px;height:34px}
+  .row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .lbl{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px}
+</style>
+</head><body class="paper-canvas">
+<div id="root"></div>
+<script type="text/babel">
+const {Icon,Decoration,Logo}=window.DesignSystem_4278dc;
+const names=['square-pen','calendar','package','grid','git-pull-request','message','folder','file','search','code','wrench','clipboard-check','lock','globe','settings','mic','arrow-up','plus','pencil','image','shirt','list','camera','refresh'];
+function Demo(){
+  return (<div className="wrap">
+    <div>
+      <div className="lbl">Logo marks</div>
+      <div className="row">
+        <Logo variant="seal" height={54}/>
+        <Logo variant="script" height={40}/>
+        <Logo variant="lockup" height={48}/>
+      </div>
+    </div>
+    <div>
+      <div className="lbl">Icon set (line)</div>
+      <div className="icons">{names.map(n=><span key={n}><Icon name={n} size={21}/></span>)}</div>
+    </div>
+    <div className="row">
+      <div>
+        <div className="lbl">Solid motifs</div>
+        <div className="row" style={{gap:'12px'}}>
+          <Icon name="heart" fill color="var(--rose-500)" size={22}/>
+          <Icon name="star" fill color="var(--gold-500)" size={22}/>
+          <Icon name="sparkle" fill color="var(--gold-500)" size={22}/>
+        </div>
+      </div>
+      <div>
+        <div className="lbl">Scrapbook decorations</div>
+        <div className="row" style={{gap:'14px'}}>
+          <Decoration name="stars" size={46}/>
+          <Decoration name="sparkles" size={46}/>
+          <Decoration name="heart" size={40}/>
+          <Decoration name="paperclip" size={40} rotate={-16}/>
+        </div>
+      </div>
+    </div>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script>
+</body></html>

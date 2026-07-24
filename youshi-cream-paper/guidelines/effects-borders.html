@@ -1,0 +1,17 @@
+<!-- @dsCard group="Effects" viewport="700x170" name="Borders & dashes" subtitle="Hairline · sage · the journal dashed line" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+  body{margin:0;background:var(--surface-canvas);font-family:var(--font-sans);color:var(--text-body)}
+  .wrap{padding:22px 26px;display:flex;flex-direction:column;gap:16px}
+  .r{display:flex;align-items:center;gap:16px}
+  .box{width:150px;height:44px;border-radius:var(--radius-md);background:var(--surface-card-hi)}
+  .tok{font-family:var(--font-mono);font-size:11px;color:var(--ink-500)}
+  .dash{flex:1;border-top:1px dashed var(--border-dash)}
+  .dashsage{flex:1;border-top:1.5px dashed var(--sage-400)}
+</style></head>
+<body><div class="wrap">
+  <div class="r"><span class="box" style="border:1px solid var(--border-hair)"></span><span class="tok">1px solid --border-hair</span></div>
+  <div class="r"><span class="box" style="border:1.5px solid var(--sage-300)"></span><span class="tok">1.5px solid --border-sage</span></div>
+  <div class="r"><span class="tok" style="width:150px">--dash-line</span><span class="dash"></span></div>
+  <div class="r"><span class="tok" style="width:150px">--dash-line-sage</span><span class="dashsage"></span></div>
+</div></body></html>

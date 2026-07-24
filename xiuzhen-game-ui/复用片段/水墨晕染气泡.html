@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Serif SC","PingFang SC",serif;
+       background:radial-gradient(140% 72% at 50% -8%,#fcf9f3,#f1ebe0);
+       min-height:100vh;padding:32px 22px;display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+  .cap{font-size:13px;color:#7a7263;line-height:1.6;max-width:600px}
+  .cap b{color:#3a352d}
+  .row{display:flex;gap:10px;align-items:flex-start}
+  .av{flex:0 0 36px;width:36px;height:36px;border-radius:10px;background:linear-gradient(160deg,#e9e1d0,#d6cbb3);
+      border:1px solid rgba(70,62,48,.3);display:flex;align-items:center;justify-content:center;font-size:17px;color:#4a443a}
+
+  /* 多层径向渐变叠出“墨团洇开”的软边（近似）。改 --ink 即换墨色 */
+  .wash{
+    position:relative;display:inline-block;max-width:300px;padding:13px 18px;
+    color:var(--tx);font-size:15px;line-height:1.7;
+    background:
+      radial-gradient(58% 82% at 28% 38%, var(--ink) 0%, transparent 68%),
+      radial-gradient(46% 70% at 72% 64%, var(--ink) 0%, transparent 70%),
+      radial-gradient(40% 60% at 55% 30%, var(--ink) 0%, transparent 66%),
+      radial-gradient(90% 120% at 50% 55%, var(--ink2) 0%, transparent 74%);
+  }
+  .orn{position:absolute;right:2px;top:-12px;width:32px;height:32px;
+    background:repeating-linear-gradient(45deg,rgba(70,62,48,.13) 0 5px,transparent 5px 10px);
+    border:1px dashed rgba(70,62,48,.35);border-radius:5px;display:flex;align-items:center;justify-content:center}
+  .orn span{font-family:monospace;font-size:7px;color:#5a544a}
+
+  .mo{--ink:rgba(60,72,80,.20);--ink2:rgba(60,72,80,.10);--tx:#27343b}      /* 冷墨（师尊） */
+  .red{--ink:rgba(150,70,70,.20);--ink2:rgba(150,70,70,.10);--tx:#5a2a2a}   /* 绛（剑灵） */
+  .am{--ink:rgba(150,115,55,.22);--ink2:rgba(150,115,55,.11);--tx:#4a3a1c}  /* 暖（小师妹） */
+</style>
+</head>
+<body>
+  <div class="cap"><b>CSS 近似 · 软边墨晕 · 随气泡拉伸 · 改一个变量换墨色</b>（真要那股纤维渗化感，把背景换成你生的"晕染纹理 PNG"即可，结构不变）</div>
+
+  <div class="row"><div class="av">尊</div><div class="wash mo">胡闹。<div class="orn"><span>角饰</span></div></div></div>
+  <div class="row"><div class="av">尊</div><div class="wash mo">夜深了，早些歇息，莫要再贪那点小聪明。<div class="orn"><span>角饰</span></div></div></div>
+  <div class="row"><div class="av">剑</div><div class="wash red">换什么换，本座的契主炼的便是天材地宝，谁敢说半个不字。<div class="orn"><span>角饰</span></div></div></div>
+  <div class="row"><div class="av" style="color:#5a4a2c">妹</div><div class="wash am">好呀~今晚谁输了谁请灵石。<div class="orn"><span>角饰</span></div></div></div>
+</body>
+</html>

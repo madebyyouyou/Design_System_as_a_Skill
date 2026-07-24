@@ -1,0 +1,115 @@
+/* ============================================================
+   祐识 · 奶油宣纸 — COLOR TOKENS
+   Palette sampled from the brand marks & scrapbook motifs:
+   sage script (#8A9A6B), forest-ink paperclip (#3E4637),
+   mustard stars (#C6B275), blush hearts (#D6AAA3),
+   on cool rice-paper ivory (#F5F4EF — cool ivory, only a whisper of warmth).
+   --paper-page (#F5F4EF) is THE canonical page color: the final RENDERED
+   canvas after the grain composites, not just a base declaration.
+   ============================================================ */
+:root{
+  /* ---- Rice-paper ivory neutrals (cool ivory, low warmth) ---- */
+  --cream-50:#FEFEFC;   /* card highlight / lightest */
+  --cream-100:#FBFAF5;  /* raised surfaces, sidebar */
+  --cream-200:#F8F7F1;  /* card surface */
+  --cream-300:#F5F4EF;  /* app canvas — cool ivory page (== --paper-page) */
+  --cream-400:#EDEBE1;  /* inset wells */
+  --cream-500:#E0DDD0;  /* hairline / paper edge */
+  --cream-600:#CDC9BB;  /* stronger divider on cream */
+
+  /* ---- Forest ink (warm green-grey darks / text) ---- */
+  --ink-900:#2B3123;
+  --ink-800:#353D2B;
+  --ink-700:#3E4637;    /* strong body — paperclip stroke */
+  --ink-600:#4E5743;
+  --ink-500:#5F6A4F;    /* secondary text */
+  --ink-400:#7C876A;    /* muted / placeholder */
+  --ink-300:#9AA488;    /* faint */
+  --ink-200:#BAC2A9;    /* disabled */
+
+  /* ---- Sage green (primary) ---- */
+  --sage-700:#5E6E44;
+  --sage-600:#6E7E52;   /* primary pressed / strong */
+  --sage-500:#8A9A6B;   /* PRIMARY brand — logo script */
+  --sage-400:#A3B187;
+  --sage-300:#C2CBAF;
+  --sage-200:#DCE2CF;
+  --sage-100:#ECEFE2;
+  --sage-50:#F4F6EE;
+
+  /* ---- Mustard gold (accent) ---- */
+  --gold-600:#B39A57;
+  --gold-500:#C6B275;   /* stars, sparkles */
+  --gold-400:#D6C591;
+  --gold-300:#E4D8B4;
+  --gold-200:#EFE7CF;
+
+  /* ---- Blush rose (accent) ---- */
+  --rose-600:#C58E86;
+  --rose-500:#D6AAA3;   /* hearts */
+  --rose-400:#E3BFB9;
+  --rose-300:#EDD2CD;
+  --rose-200:#F5E5E2;
+
+  /* ---- Sky (rare cool accent — links/info) ---- */
+  --sky-600:#7593A0;
+  --sky-500:#8FA9B0;
+  --sky-300:#C2D2D6;
+  --sky-100:#E6EDEE;
+
+  /* ============ SEMANTIC ALIASES ============ */
+  /* Surfaces */
+  --paper-page:#F5F4EF;              /* THE page color — final rendered canvas, grain must not shift it */
+  --surface-canvas:var(--paper-page);
+  --surface-raised:var(--cream-100);
+  --surface-card:var(--cream-200);
+  --surface-card-hi:var(--cream-50);
+  --surface-inset:var(--cream-400);
+  --surface-sage:var(--sage-100);
+  --surface-overlay:rgba(43,49,35,.34);
+
+  /* Text */
+  --text-strong:var(--ink-800);
+  --text-body:var(--ink-700);
+  --text-muted:var(--ink-500);
+  --text-faint:var(--ink-400);
+  --text-disabled:var(--ink-200);
+  --text-on-sage:var(--cream-50);
+  --text-on-dark:var(--cream-100);
+
+  /* Brand */
+  --brand:var(--sage-500);
+  --brand-strong:var(--sage-600);
+  --brand-deep:var(--sage-700);
+  --brand-wash:var(--sage-100);
+  --brand-tint:var(--sage-200);
+
+  /* Accents */
+  --accent-gold:var(--gold-500);
+  --accent-gold-wash:var(--gold-200);
+  --accent-rose:var(--rose-500);
+  --accent-rose-wash:var(--rose-200);
+
+  /* Lines / borders */
+  --border-hair:var(--cream-500);
+  --border-strong:var(--cream-600);
+  --border-sage:var(--sage-300);
+  --border-dash:var(--ink-300);
+
+  /* States */
+  --success:var(--sage-600);
+  --success-wash:var(--sage-100);
+  --warning:var(--gold-600);
+  --warning-wash:var(--gold-200);
+  --danger:#C57B6E;
+  --danger-wash:#F3E1DC;
+  --info:var(--sky-500);
+  --info-wash:var(--sky-100);
+
+  /* Focus ring */
+  --focus-ring:rgba(163,177,135,.55);
+
+  /* Links */
+  --link:var(--sage-600);
+  --link-hover:var(--sage-700);
+}

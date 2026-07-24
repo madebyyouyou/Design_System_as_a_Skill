@@ -1,0 +1,306 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  --page-bg: #f1eadb;
+  --page-ink: #31291f;
+  --page-muted: #776a55;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--page-ink);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .54), rgba(235, 222, 195, .76)),
+    radial-gradient(circle at 18% 12%, rgba(173, 50, 40, .10), transparent 34%),
+    radial-gradient(circle at 82% 84%, rgba(52, 105, 92, .13), transparent 36%),
+    var(--page-bg);
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+}
+
+.demo-shell {
+  width: min(1080px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 64px) 0;
+}
+
+.demo-title {
+  margin: 0 0 24px;
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.demo-subtitle {
+  margin: -12px 0 36px;
+  max-width: 720px;
+  color: var(--page-muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.demo-stack {
+  display: grid;
+  gap: clamp(22px, 4vw, 42px);
+}
+
+.demo-row {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.demo-label {
+  margin: 0 0 2px;
+  color: #6b5634;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mobile-preview {
+  width: min(360px, 100%);
+  padding: 16px 10px;
+  border: 1px solid rgba(105, 83, 45, .22);
+  background: rgba(255, 252, 244, .38);
+}
+
+/*
+  聊天气泡主要调这些变量：
+  1. --bubble-slice-*：底板 PNG 的九宫格切片线，单位是源图片像素，不写 px。
+  2. --bubble-border-*：九宫格边框在页面里的显示厚度；尽量和 slice 比例接近，角饰更不容易变形。
+  3. --bubble-pad-*：文字安全区，文字压到边框/角饰时先调这里。
+  4. --decor-*：叠加装饰层的尺寸、裁切位置、摆放位置。
+*/
+.chat-bubble {
+  --bubble-slice-top: 374;
+  --bubble-slice-right: 190;
+  --bubble-slice-bottom: 352;
+  --bubble-slice-left: 190;
+
+  --bubble-border-top: 92px;
+  --bubble-border-right: 48px;
+  --bubble-border-bottom: 88px;
+  --bubble-border-left: 48px;
+  --bubble-pad-block: clamp(16px, 2.8vw, 30px);
+  --bubble-pad-inline: clamp(22px, 4vw, 46px);
+  --bubble-min-width: 300px;
+  --bubble-max-width: 720px;
+
+  --decor-opacity: .88;
+  --decor-sheet-width: 724px;
+
+  --decor-tassel-w: 54px;
+  --decor-tassel-h: 174px;
+  --decor-tassel-top: -12px;
+  --decor-tassel-left: 34px;
+  --decor-tassel-second-left: 150px;
+  --decor-tassel-left-crop-x: -52px;
+  --decor-tassel-left-crop-y: -52px;
+  --decor-tassel-second-crop-x: -190px;
+  --decor-tassel-second-crop-y: -52px;
+
+  --decor-bamboo-top-w: 190px;
+  --decor-bamboo-top-h: 110px;
+  --decor-bamboo-top-x: 210px;
+  --decor-bamboo-top-y: 8px;
+  --decor-bamboo-top-crop-x: -278px;
+  --decor-bamboo-top-crop-y: -82px;
+
+  --decor-bamboo-right-w: 216px;
+  --decor-bamboo-right-h: 128px;
+  --decor-bamboo-right-x: 28px;
+  --decor-bamboo-right-y: -2px;
+  --decor-bamboo-right-crop-x: -506px;
+  --decor-bamboo-right-crop-y: -58px;
+
+  --decor-scene-left-w: 292px;
+  --decor-scene-left-h: 168px;
+  --decor-scene-left-x: 20px;
+  --decor-scene-left-y: 8px;
+  --decor-scene-left-crop-x: -8px;
+  --decor-scene-left-crop-y: -306px;
+
+  --decor-scene-right-w: 326px;
+  --decor-scene-right-h: 176px;
+  --decor-scene-right-x: 18px;
+  --decor-scene-right-y: 4px;
+  --decor-scene-right-crop-x: -360px;
+  --decor-scene-right-crop-y: -302px;
+
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
+  width: fit-content;
+  min-width: min(var(--bubble-min-width), 100%);
+  max-width: min(var(--bubble-max-width), 100%);
+  padding: var(--bubble-pad-block) var(--bubble-pad-inline);
+  border-style: solid;
+  border-color: transparent;
+  border-width:
+    var(--bubble-border-top)
+    var(--bubble-border-right)
+    var(--bubble-border-bottom)
+    var(--bubble-border-left);
+  border-image-source: url("../assets/bubbles/bubble-base.png");
+  border-image-slice:
+    var(--bubble-slice-top)
+    var(--bubble-slice-right)
+    var(--bubble-slice-bottom)
+    var(--bubble-slice-left)
+    fill;
+  border-image-repeat: stretch;
+  background: rgba(255, 253, 244, .38);
+  color: #352b1e;
+  font-size: 16px;
+  line-height: 1.78;
+  text-align: left;
+}
+
+.chat-bubble--wide {
+  width: min(100%, var(--bubble-max-width));
+}
+
+.chat-bubble--mobile {
+  width: 100%;
+  --bubble-min-width: 0px;
+  --bubble-max-width: 100%;
+}
+
+.chat-bubble__content {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.chat-bubble__decor {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  width: var(--decor-box-w);
+  height: var(--decor-box-h);
+  pointer-events: none;
+  opacity: var(--decor-opacity);
+}
+
+.chat-bubble__decor img {
+  position: absolute;
+  left: var(--decor-crop-x);
+  top: var(--decor-crop-y);
+  display: block;
+  width: var(--decor-sheet-width);
+  max-width: none;
+  height: auto;
+  user-select: none;
+}
+
+.chat-bubble__decor--tassel-left {
+  --decor-box-w: var(--decor-tassel-w);
+  --decor-box-h: var(--decor-tassel-h);
+  --decor-crop-x: var(--decor-tassel-left-crop-x);
+  --decor-crop-y: var(--decor-tassel-left-crop-y);
+  top: var(--decor-tassel-top);
+  left: var(--decor-tassel-left);
+}
+
+.chat-bubble__decor--tassel-second {
+  --decor-box-w: var(--decor-tassel-w);
+  --decor-box-h: var(--decor-tassel-h);
+  --decor-crop-x: var(--decor-tassel-second-crop-x);
+  --decor-crop-y: var(--decor-tassel-second-crop-y);
+  top: var(--decor-tassel-top);
+  left: var(--decor-tassel-second-left);
+}
+
+.chat-bubble__decor--bamboo-top {
+  --decor-box-w: var(--decor-bamboo-top-w);
+  --decor-box-h: var(--decor-bamboo-top-h);
+  --decor-crop-x: var(--decor-bamboo-top-crop-x);
+  --decor-crop-y: var(--decor-bamboo-top-crop-y);
+  top: var(--decor-bamboo-top-y);
+  right: var(--decor-bamboo-top-x);
+}
+
+.chat-bubble__decor--bamboo-right {
+  --decor-box-w: var(--decor-bamboo-right-w);
+  --decor-box-h: var(--decor-bamboo-right-h);
+  --decor-crop-x: var(--decor-bamboo-right-crop-x);
+  --decor-crop-y: var(--decor-bamboo-right-crop-y);
+  top: var(--decor-bamboo-right-y);
+  right: var(--decor-bamboo-right-x);
+}
+
+.chat-bubble__decor--scene-left {
+  --decor-box-w: var(--decor-scene-left-w);
+  --decor-box-h: var(--decor-scene-left-h);
+  --decor-crop-x: var(--decor-scene-left-crop-x);
+  --decor-crop-y: var(--decor-scene-left-crop-y);
+  bottom: var(--decor-scene-left-y);
+  left: var(--decor-scene-left-x);
+}
+
+.chat-bubble__decor--scene-right {
+  --decor-box-w: var(--decor-scene-right-w);
+  --decor-box-h: var(--decor-scene-right-h);
+  --decor-crop-x: var(--decor-scene-right-crop-x);
+  --decor-crop-y: var(--decor-scene-right-crop-y);
+  right: var(--decor-scene-right-x);
+  bottom: var(--decor-scene-right-y);
+}
+
+@media (max-width: 560px) {
+  .demo-shell {
+    width: min(100% - 18px, 420px);
+  }
+
+  .chat-bubble {
+    --bubble-border-top: 72px;
+    --bubble-border-right: 36px;
+    --bubble-border-bottom: 70px;
+    --bubble-border-left: 36px;
+    --bubble-pad-block: 12px;
+    --bubble-pad-inline: 16px;
+    --decor-sheet-width: 580px;
+
+    --decor-tassel-w: 42px;
+    --decor-tassel-h: 138px;
+    --decor-tassel-top: -8px;
+    --decor-tassel-left: 18px;
+    --decor-tassel-second-left: 92px;
+    --decor-tassel-left-crop-x: -42px;
+    --decor-tassel-left-crop-y: -42px;
+    --decor-tassel-second-crop-x: -152px;
+    --decor-tassel-second-crop-y: -42px;
+
+    --decor-bamboo-top-w: 138px;
+    --decor-bamboo-top-h: 82px;
+    --decor-bamboo-top-x: 114px;
+    --decor-bamboo-top-y: 2px;
+    --decor-bamboo-top-crop-x: -222px;
+    --decor-bamboo-top-crop-y: -66px;
+
+    --decor-bamboo-right-w: 154px;
+    --decor-bamboo-right-h: 92px;
+    --decor-bamboo-right-x: 10px;
+    --decor-bamboo-right-y: -4px;
+    --decor-bamboo-right-crop-x: -405px;
+    --decor-bamboo-right-crop-y: -46px;
+
+    --decor-scene-left-w: 214px;
+    --decor-scene-left-h: 122px;
+    --decor-scene-left-x: 8px;
+    --decor-scene-left-y: 4px;
+    --decor-scene-left-crop-x: -6px;
+    --decor-scene-left-crop-y: -245px;
+
+    --decor-scene-right-w: 230px;
+    --decor-scene-right-h: 126px;
+    --decor-scene-right-x: 8px;
+    --decor-scene-right-y: 2px;
+    --decor-scene-right-crop-x: -288px;
+    --decor-scene-right-crop-y: -242px;
+  }
+}

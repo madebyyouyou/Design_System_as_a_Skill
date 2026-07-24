@@ -1,0 +1,99 @@
+<!-- @dsCard group="Agent" viewport="1040x820" name="Thinking & tool trace" subtitle="Chained read-only trace · shimmer running · stamp-to-approve envelope" -->
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8">
+<title>Agent experience — 祐识</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>window.__YOUYOU_ASSET_BASE__='../../assets';</script>
+<script src="../../_ds_bundle.js"></script>
+<style>
+  body{margin:0;background:var(--surface-canvas)}
+  .stage{display:flex;gap:26px;padding:28px;align-items:flex-start}
+  .col{display:flex;flex-direction:column;gap:12px}
+  .thread{width:470px;flex:none}
+  .panel{background:transparent;border:none;border-radius:0;box-shadow:none;padding:6px 2px 10px}
+  .legend{width:404px;flex:none;gap:14px}
+  .eyebrow{margin:0}
+  .bubble{max-width:88%;padding:10px 14px;font-size:14.5px;line-height:1.6;color:var(--text-body)}
+  .bubble.mine{align-self:flex-end;background:var(--sage-100);border-radius:16px 16px 6px 16px;color:var(--ink-800)}
+  .bubble.theirs{align-self:flex-start;background:var(--surface-card);border:1px solid var(--border-hair);border-radius:16px 16px 16px 6px}
+  .note{font-size:12.5px;color:var(--text-faint);line-height:1.55;margin:0}
+  .note b{color:var(--text-muted);font-weight:700}
+  .divide{height:1px;background:var(--border-hair);margin:4px 0}
+  h3.lbl{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--text-faint);margin:0}
+  /* nested results card (rich detail body) */
+  .rc{border:1px solid var(--border-hair);border-radius:12px;background:var(--surface-card-hi);box-shadow:var(--shadow-sm);padding:6px;max-height:150px;overflow:hidden;position:relative}
+  .rc-row{display:flex;align-items:center;gap:10px;padding:8px 8px}
+  .rc-row+.rc-row{border-top:1px solid var(--cream-400)}
+  .fav{flex:none;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff}
+  .rc-t{flex:1;min-width:0;font-size:13px;color:var(--text-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rc-d{flex:none;font-size:12px;color:var(--text-faint)}
+  .rc-sb{position:absolute;right:3px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--cream-500)}
+  .rc-sb i{position:absolute;top:0;left:0;right:0;height:38%;border-radius:3px;background:var(--sage-300)}
+  .slotcap{display:flex;align-items:center;gap:8px;font-family:var(--font-hand);font-size:15px;color:var(--rose-600);margin-left:2px}
+</style>
+</head><body class="paper-canvas">
+<div id="root"></div>
+<script type="text/babel">
+
+const { TraceChain, TraceLine, ApprovalCard } = window.DesignSystem_4278dc;
+
+function Fav({ c, t }) {return <span className="fav" style={{ background: c }}>{t}</span>;}
+function ResultsCard() {
+  return <div className="rc">
+    <div className="rc-row"><Fav c="#111" t="X" /><span className="rc-t">河谷清晨预报：薄雾转晴，微风 2 级，8–15℃</span><span className="rc-d">x.com</span></div>
+    <div className="rc-row"><Fav c="#5B7DB1" t="气" /><span className="rc-t">明日 06:00–10:00 河滨步道天气实况</span><span className="rc-d">weather.cn</span></div>
+    <div className="rc-row"><Fav c="#8A9A6B" t="记" /><span className="rc-t">「晨走」适宜指数：很适合，注意露水</span><span className="rc-d">note.app</span></div>
+    <div className="rc-row"><Fav c="#C6B275" t="H" /><span className="rc-t">Riverside walk · sunrise conditions thread</span><span className="rc-d">hn.com</span></div>
+    <span className="rc-sb"><i></i></span>
+  </div>;
+}
+
+function Demo() {
+  return <div className="stage">
+
+    <div className="col thread">
+      <div className="eyebrow">INLINE EXECUTION TRACE · 链式</div>
+      <div className="bubble mine">帮我看看明早有没有空？想去河边走走，顺手记进日历。</div>
+
+      <div className="panel">
+        <TraceChain>
+          <TraceLine kind="thinking" icon="clock" label="先看日历再答应，别拍脑袋就应下来。" />
+          <TraceLine icon="calendar" label="查看日历" target="明天 6:00–10:00" meta="无冲突"
+          detail={"明早无日程。\n最近一条：7/18 14:00「牙医复诊」。"} />
+          <TraceLine icon="external-link" extLink label="Failed to fetch" target="weather.cn/hourly/riverside" />
+          <TraceLine kind="thinking" icon="clock" label="那我换个法子，直接搜一下明晨的天气。" />
+          <TraceLine icon="globe" label="河边 明晨天气 日出" meta="8 results" defaultOpen detail={<ResultsCard />} />
+          <TraceLine label="整理成一条日程草稿" status="running" />
+          <TraceLine icon="check-circle" label="准备好了，等你盖章" />
+        </TraceChain>
+      </div>
+
+      <div className="slotcap"><span style={{ fontSize: 20, color: 'var(--rose-500)' }}>↑</span> 运行中那行的图标位（20–28pt）留空，给原生动效图标</div>
+
+      <div className="bubble theirs">明早整段都空着，风也不大。我把 7:30 的「河边散步」写成一张卡片了 —— 你盖个章，我就记进日历。</div>
+    </div>
+
+    <div className="col legend">
+      <div className="eyebrow">PROMINENT · 只有写入 / 授权才升级</div>
+      <ApprovalCard title="河边散步"
+      meta={[{ icon: 'calendar', text: '7月18日（六）07:30–08:30' }, { icon: 'bell', text: '提前 15 分钟提醒' }]}
+      approvedNote="已记入 · 21:07" showUndo />
+      <p className="note"><b>盖章即批准。</b> 四拍纸片入场（衬纸 → 主纸 → 贴纸 / 虚线 → 祐印），点「祐」印章会抬起、盖下、留一枚淡淡的墨印，然后收拢成右下的回执小票。试试点它。</p>
+
+      <div className="divide"></div>
+      <div className="eyebrow">DESTRUCTIVE · danger tone</div>
+      <ApprovalCard tone="danger" title="删除这条记忆？"
+      detail={<>「不吃香菜」将从<span className="yy-ap__mono">公共档案</span>移除</>} />
+
+      <div className="divide"></div>
+      <div className="eyebrow">COMPLETED RECEIPT</div>
+      <ApprovalCard status="approved" title="给「青梧」的信" approvedNote="已寄出 · 21:07" animateIn={false} />
+    </div>
+
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo />);
+</script>
+</body></html>

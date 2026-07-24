@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NavItem 选中态 · 线性标记探索</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script>window.__YOUYOU_ASSET_BASE__='../assets';</script>
+<script src="../_ds_bundle.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface-canvas);font-family:var(--font-sans);color:var(--text-body);min-height:100vh}
+a{color:var(--link)}a:hover{color:var(--link-hover)}
+.stage{max-width:920px;margin:0 auto;padding:44px 32px 90px}
+.kick{font-family:var(--font-mono,ui-monospace,monospace);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-faint);margin:0 0 10px}
+h1{font-size:34px;line-height:1.08;margin:0 0 10px;color:var(--text-strong);font-weight:var(--weight-bold);letter-spacing:-.01em}
+.lede{font-size:15px;line-height:1.6;color:var(--text-muted);max-width:60ch;margin:0;text-wrap:pretty}
+.banner{margin:28px 0 24px;display:flex;align-items:flex-start;gap:15px;padding:16px 18px;background:var(--surface-card);border:1px solid var(--border-hair);border-radius:var(--radius-lg)}
+.banner .no{font-family:var(--font-mono,ui-monospace,monospace);font-size:13px;font-weight:700;color:var(--brand-strong);padding-top:1px;letter-spacing:.04em}
+.banner h2{font-size:18px;margin:0 0 4px;color:var(--text-strong);font-weight:var(--weight-bold)}
+.banner p{margin:0;font-size:13.5px;line-height:1.55;color:var(--text-muted)}
+.panels{display:flex;gap:26px;flex-wrap:wrap}
+.panel{flex:1;min-width:252px}
+.plabel{display:flex;align-items:center;gap:8px;margin:0 0 11px;font-size:12px;font-weight:700;letter-spacing:.03em;color:var(--text-muted)}
+.plabel .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.side{background:var(--surface-raised);border:1px solid var(--border-hair);border-radius:var(--radius-xl);padding:12px 10px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:2px}
+.hint{margin:26px 0 0;font-size:12.5px;line-height:1.6;color:var(--text-faint)}
+</style>
+</head>
+<body class="paper-canvas">
+<div id="root"></div>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const {NavItem,Checkbox,Badge}=window.DesignSystem_4278dc;
+
+/* ---- accent ink triples (stroke = mark, soft = dashed rail, deep = text) ---- */
+const AC={
+  '青竹':{stroke:'#6E7E52',soft:'#A3B187',deep:'#5E6E44'},
+  '黄栌':{stroke:'#B39A57',soft:'#D6C591',deep:'#8A7640'},
+  '胭脂':{stroke:'#C58E86',soft:'#E3BFB9',deep:'#A96C63'},
+};
+
+const VARIANT_META={
+  '竖笔':{no:'01',short:'竖笔',title:'竖笔 · 左缘毛笔竖痕',desc:'行首一道两端渐隐的墨色竖笔,替代整块底色 —— 干净、笔意十足,选中一目了然。'},
+  '下划':{no:'02',short:'下划',title:'手写下划 · 波浪笔迹',desc:'文字下方一条略带起伏的手写下划线,像随手圈出的重点,轻而不抢。'},
+  '角标':{no:'03',short:'角标',title:'角标 · 开口取景框',desc:'左上、右下两枚开口角标,取景框式框选整行 —— 四边不闭合,更透气。'},
+  '圈图标':{no:'04',short:'圈图标',title:'圈图标 · 墨笔套索',desc:'一圈略微出头的手绘墨环套住图标,视线自然聚到行首,俏皮而克制。'},
+  '虚线锚点':{no:'05',short:'虚线锚点',title:'虚线锚点 · 手账锚栏',desc:'左缘一条虚线导栏加实心节点,呼应手账时间线的「你在这里」定位感。'},
+};
+
+function buildCSS(variant,accent,tint){
+  const A=AC[accent];
+  const TXT=tint?A.deep:'var(--ink-800)';
+  const IC=tint?A.stroke:'var(--ink-500)';
+  const enc=s=>encodeURIComponent(s);
+  const u=s=>`url("data:image/svg+xml,${enc(s)}")`;
+  const blade=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 26'><path d='M3 0.6C1.9 6 1.5 13 2.4 20 2.66 22.6 2.86 24.4 3 25.4 3.14 24.4 3.4 22.6 3.7 20 4.5 13 4.1 6 3 0.6Z' fill='${A.stroke}'/></svg>`;
+  const wave=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'><path d='M2 5C18 2 34 7 50 4.4 66 2 76 6 92 4.4 104 3.2 110 5 118 4.6' fill='none' stroke='${A.stroke}' stroke-width='2' stroke-linecap='round'/><path d='M4 6.7C24 5.2 44 8 66 6 84 4.4 100 6 116 6.6' fill='none' stroke='${A.stroke}' stroke-width='1.1' stroke-linecap='round' opacity='0.38'/></svg>`;
+  const lasso=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 34'><path d='M27 5C12 1 3 10 5 19 7 29 26 33 34 24 39 18 37 9 27 6' fill='none' stroke='${A.stroke}' stroke-width='2' stroke-linecap='round'/></svg>`;
+  const base=`
+.redesign .yy-nav--active{background:transparent;border:0;box-shadow:none;color:${TXT};font-weight:var(--weight-bold)}
+.redesign .yy-nav--active:hover,.redesign .yy-nav--active:active{background:transparent}
+.redesign .yy-nav--active .yy-nav__ic{color:${IC};position:relative;overflow:visible}
+.redesign .yy-nav--active .yy-nav__label{position:relative;font-size:1.08em;margin-left:6px;letter-spacing:.01em;transition:font-size var(--dur-base) var(--ease-out),margin-left var(--dur-base) var(--ease-out)}
+.redesign .yy-nav--active::before{content:none}
+.redesign .yy-nav--active::after{content:none}
+.redesign .yy-nav--active .yy-nav__ic::after{content:none}
+`;
+  const V={
+    '竖笔':`.redesign .yy-nav--active::before{content:"";position:absolute;left:1px;top:50%;transform:translateY(-50%);width:6px;height:26px;background:center/contain no-repeat ${u(blade)}}`,
+    '下划':`.redesign .yy-nav--active::after{content:"";position:absolute;left:10px;right:12px;bottom:1px;height:7px;background:0 0/100% 100% no-repeat ${u(wave)}}
+.redesign .yy-nav--indent.yy-nav--active::after{left:34px}`,
+    '角标':`.redesign .yy-nav--active::before{content:"";position:absolute;left:2px;top:4px;width:13px;height:13px;border-top:1.5px solid ${A.stroke};border-left:1.5px solid ${A.stroke};border-top-left-radius:5px}
+.redesign .yy-nav--active::after{content:"";position:absolute;right:3px;bottom:4px;width:13px;height:13px;border-bottom:1.5px solid ${A.stroke};border-right:1.5px solid ${A.stroke};border-bottom-right-radius:5px}`,
+    '圈图标':`.redesign .yy-nav--active .yy-nav__ic::after{content:"";position:absolute;left:50%;top:50%;width:36px;height:31px;transform:translate(-50%,-53%) rotate(-4deg);background:center/contain no-repeat ${u(lasso)};pointer-events:none}`,
+    '虚线锚点':`.redesign .yy-nav--active::before{content:"";position:absolute;left:4px;top:7px;bottom:7px;border-left:1.5px dashed ${A.soft}}
+.redesign .yy-nav--active::after{content:"";position:absolute;left:1px;top:50%;width:8px;height:8px;transform:translateY(-50%);border-radius:50%;background:${A.stroke};box-shadow:0 0 0 2.5px var(--surface-raised)}`,
+  };
+  return base+(V[variant]||'');
+}
+window.buildCSS=buildCSS;
+
+function Cap({children}){return <div style={{fontSize:12,fontWeight:700,letterSpacing:'.12em',color:'var(--text-faint)',padding:'12px 10px 4px'}}>{children}</div>;}
+
+function NavList(){
+  return (<>
+    <NavItem icon="square-pen" label="新建任务"/>
+    <NavItem icon="calendar" label="已安排" active/>
+    <NavItem icon="message" label="聊天" trailing={<Badge variant="sage" size="sm">3</Badge>}/>
+    <Cap>项目</Cap>
+    <NavItem icon="folder-open" label="系统搭建"/>
+    <NavItem icon="file" label="今日穿搭灵感" indent active/>
+    <NavItem icon="file" label="手账与拍立得收藏" indent/>
+    <Cap>任务</Cap>
+    <NavItem indent label="做今日手账" leading={<Checkbox shape="circle" defaultChecked/>}/>
+    <NavItem indent label="学习一点新技能" leading={<Checkbox shape="circle"/>}/>
+    <NavItem icon="chevron-down" label="展开显示" muted/>
+  </>);
+}
+
+const TWEAK_DEFAULTS=/*EDITMODE-BEGIN*/{
+  "variant": "竖笔",
+  "accent": "青竹",
+  "tint": true
+}/*EDITMODE-END*/;
+
+function App(){
+  const [t,setTweak]=useTweaks(TWEAK_DEFAULTS);
+  const meta=VARIANT_META[t.variant]||VARIANT_META['竖笔'];
+  const ac=AC[t.accent]||AC['青竹'];
+  return (<div className="stage">
+    <style id="ds-active-style" dangerouslySetInnerHTML={{__html:buildCSS(t.variant,t.accent,t.tint)}}/>
+    <p className="kick">祐识 · YOUYOU — NAVITEM / SELECTED STATE</p>
+    <h1>选中态 · 线性标记探索</h1>
+    <p className="lede">取消整行胶囊底色、阴影与闭合描边框,改用线性、局部、手绘感的标记来提示选中。左侧为原方案,右侧为当前线性方案 —— 在 Tweaks 面板中切换五种方案与墨色进行比较。</p>
+    <div className="banner">
+      <span className="no">{meta.no}</span>
+      <div style={{flex:1,minWidth:0}}>
+        <h2>{meta.title}</h2>
+        <p>{meta.desc}</p>
+      </div>
+      <span style={{width:22,height:22,borderRadius:6,background:ac.stroke,flex:'none',marginTop:2,boxShadow:'var(--shadow-xs)'}}/>
+    </div>
+    <div className="panels">
+      <div className="panel">
+        <div className="plabel"><span className="dot" style={{background:'var(--sage-400)'}}/>原方案 · 胶囊底色</div>
+        <div className="side"><NavList/></div>
+      </div>
+      <div className="panel">
+        <div className="plabel"><span className="dot" style={{background:ac.stroke}}/>新方案 · {meta.short}</div>
+        <div className="side redesign"><NavList/></div>
+      </div>
+    </div>
+    <p className="hint">↗ 打开右上角 Tweaks 面板,切换「标记样式 / 墨色 / 文字上色」即可实时比较。</p>
+    <TweaksPanel>
+      <TweakSection label="选中标记"/>
+      <TweakRadio label="标记样式" value={t.variant} options={['竖笔','下划','角标','圈图标','虚线锚点']} onChange={v=>setTweak('variant',v)}/>
+      <TweakSection label="墨色 & 文字"/>
+      <TweakRadio label="墨色" value={t.accent} options={['青竹','黄栌','胭脂']} onChange={v=>setTweak('accent',v)}/>
+      <TweakToggle label="选中文字上色" value={t.tint} onChange={v=>setTweak('tint',v)}/>
+    </TweaksPanel>
+  </div>);
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body></html>

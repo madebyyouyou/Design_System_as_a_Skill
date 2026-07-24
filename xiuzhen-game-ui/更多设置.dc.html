@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="./support.js?v=ios-keyboard-2"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  html,body{margin:0;padding:0;height:var(--app-height,100vh);overflow:hidden;background:#16140f}
+  body{font-family:'Noto Serif SC','PingFang SC',-apple-system,BlinkMacSystemFont,serif;background:#16140f}
+  ::-webkit-scrollbar{width:0;height:0}
+  textarea{font-family:inherit}
+  textarea::placeholder{color:#a59c8b;opacity:1}
+  @keyframes saveRise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes sealPop{0%{opacity:0;transform:scale(.35) rotate(-14deg)}55%{opacity:1;transform:scale(1.12) rotate(3deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+</style>
+</helmet>
+
+<div style="position:relative;width:100%;min-height:var(--app-height,100vh);display:flex;justify-content:center;background:#16140f">
+<div data-screen-label="群聊设置" style="position:relative;width:100%;max-width:440px;height:var(--app-height,100vh);display:flex;flex-direction:column;overflow:hidden;background:radial-gradient(140% 72% at 50% -8%,#fcf9f3 0%,#f4efe4 50%,#ece4d3 100%);box-shadow:0 0 50px rgba(0,0,0,.45);--disp:{{ dispFont }}">
+
+  <!-- 背景水墨大图 -->
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background-image:url(assets/bg/landscape-1.png);background-size:cover;background-position:top center;background-repeat:no-repeat;opacity:{{ bgDim }}"></div>
+  <div style="position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(250,246,238,.18) 0%,rgba(250,246,238,.5) 34%,rgba(250,246,238,.6) 70%,rgba(250,246,238,.82) 100%)"></div>
+
+  <!-- 顶栏 -->
+  <div style="position:relative;z-index:4;display:flex;align-items:center;justify-content:space-between;padding:16px 16px 11px;border-bottom:1px solid rgba(70,62,48,.14)">
+    <div style="display:flex;align-items:center;gap:11px">
+      <div style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin-left:-5px;cursor:pointer;transition:transform .15s,opacity .15s" data-comment-anchor="b49b1ea7e1-div" style-active="transform:scale(.88)" style-hover="opacity:.62">
+        <sc-if value="{{ bk1 }}" hint-placeholder-val="{{ true }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2b2924" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="6" y2="12"></line><polyline points="11 7 6 12 11 17"></polyline></svg></sc-if>
+        <sc-if value="{{ bk2 }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2b2924" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="14 5 7 12 14 19"></polyline></svg></sc-if>
+        <sc-if value="{{ bk3 }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2b2924" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 5 6 12 13 19"></polyline><polyline points="9.5 12 18 12 18 7.5"></polyline></svg></sc-if>
+        <sc-if value="{{ bk4 }}"><svg width="30" height="30" viewBox="0 0 24 24" fill="#2b2924" stroke="none"><path d="M15.6 4.6 C 10.2 7.2, 7.2 10, 5.3 12 C 7.2 14, 10.2 16.8, 15.6 19.4 C 14.2 17, 12.9 14.4, 12.9 12 C 12.9 9.6, 14.2 7, 15.6 4.6 Z"></path></svg></sc-if>
+      </div>
+      <span style="font-family:var(--disp);font-size:25px;color:#2b2924;letter-spacing:4px;line-height:1">高级设置</span>
+    </div>
+    
+  </div>
+
+  <!-- 滚动内容 -->
+  <div style="position:relative;z-index:2;flex:1;min-height:0;overflow-y:auto;padding:22px 18px 34px;display:flex;flex-direction:column;gap:30px">
+
+    <!-- ===== 一 · 回合与额度 ===== -->
+    <div>
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px">
+        <div style="flex:0 0 auto;width:46px;height:46px;background:url(assets/brush/enso-red.png) center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center"><span style="position:relative;font-family:var(--disp);font-size:15px;color:#2b2924;transform:translate(-3.5px,-3.5px)">一</span></div>
+        <span style="font-family:var(--disp);font-size:20px;color:#2b2924;letter-spacing:2px;white-space:nowrap">回合 · 额度</span>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(70,62,48,.3),rgba(70,62,48,0))"></div>
+        
+      </div>
+
+      <!-- 最近消息窗口 -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:9px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:600;color:#2b2924;letter-spacing:.5px;margin-bottom:4px">最近消息窗口<span style="font-size:12px;font-weight:400;color:#8a8273">（条）</span></div>
+          <div style="font-size:12px;color:#8a8273;line-height:1.55;max-width:200px">每次调用喂给角色的群聊近况条数。越大越连贯，也越费额度。</div>
+        </div>
+        <div style="flex:0 0 auto;display:flex;align-items:center;gap:1px;padding:0 4px;border:1px solid rgba(70,62,48,.26);border-radius:19px;background:rgba(252,249,243,.62);box-shadow:0 1px 2px rgba(40,30,15,.07)">
+          <div onClick="{{ recentDec }}" style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b655a;cursor:pointer;user-select:none;transition:background .15s,transform .12s" style-active="background:rgba(70,62,48,.1);transform:scale(.9)">−</div>
+          <div style="min-width:34px;text-align:center;font-family:var(--disp);font-size:17px;color:#2b2924;line-height:1">{{ recentWindow }}</div>
+          <div onClick="{{ recentInc }}" style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b655a;cursor:pointer;user-select:none;transition:background .15s,transform .12s" style-active="background:rgba(70,62,48,.1);transform:scale(.9)">＋</div>
+        </div>
+      </div>
+
+      <div style="height:1px;background:rgba(70,62,48,.1);margin:16px 0"></div>
+
+      <!-- 触发式补刀 第二轮 -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+          <div style="font-size:15px;font-weight:600;color:#2b2924;letter-spacing:.5px">开启「触发式补刀」第二轮</div>
+          <div onClick="{{ comboTog.toggle }}" style="flex:0 0 auto;width:52px;height:29px;border-radius:15px;background:{{ comboTog.track }};border:1px solid {{ comboTog.border }};position:relative;cursor:pointer;transition:background .22s,border-color .22s">
+            <div style="position:absolute;top:2px;left:{{ comboTog.knob }};width:23px;height:23px;border-radius:50%;background:#faf6ee;box-shadow:0 1px 3px rgba(40,30,15,.32);transition:left .2s cubic-bezier(.33,1,.68,1)"></div>
+          </div>
+        </div>
+        <div style="font-size:12.5px;color:#7a7263;line-height:1.65;margin-top:9px">第一轮并行回应后，被点名/卷入的角色可补一刀（当场吃醋、拌嘴、补刀），形成修罗场。关掉就只有一轮。</div>
+      </div>
+
+      <div style="height:1px;background:rgba(70,62,48,.1);margin:16px 0"></div>
+
+      <!-- 补刀人数上限 -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:600;color:#2b2924;letter-spacing:.5px;margin-bottom:4px">补刀人数上限</div>
+          <div style="font-size:12px;color:#8a8273;line-height:1.55">第二轮最多几人开口，借此控制额度。</div>
+        </div>
+        <div style="flex:0 0 auto;display:flex;align-items:center;gap:1px;padding:0 4px;border:1px solid rgba(70,62,48,.26);border-radius:19px;background:rgba(252,249,243,.62);box-shadow:0 1px 2px rgba(40,30,15,.07)">
+          <div onClick="{{ comboDec }}" style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b655a;cursor:pointer;user-select:none;transition:background .15s,transform .12s" style-active="background:rgba(70,62,48,.1);transform:scale(.9)">−</div>
+          <div style="min-width:34px;text-align:center;font-family:var(--disp);font-size:17px;color:#2b2924;line-height:1">{{ comboLimit }}</div>
+          <div onClick="{{ comboInc }}" style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b655a;cursor:pointer;user-select:none;transition:background .15s,transform .12s" style-active="background:rgba(70,62,48,.1);transform:scale(.9)">＋</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 二 · 自发言 ===== -->
+    <div>
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px">
+        <div style="flex:0 0 auto;width:46px;height:46px;background:url(assets/brush/enso-red.png) center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center"><span style="position:relative;font-family:var(--disp);font-size:15px;color:#2b2924;transform:translate(-3.5px,-3.5px)">二</span></div>
+        <span style="font-family:var(--disp);font-size:20px;color:#2b2924;letter-spacing:2px;white-space:nowrap">自发 · 冒泡</span>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(70,62,48,.3),rgba(70,62,48,0))"></div>
+        
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+          <div style="font-size:15px;font-weight:600;color:#2b2924;letter-spacing:.5px">开启真实计时器</div>
+          <div onClick="{{ timerTog.toggle }}" style="flex:0 0 auto;width:52px;height:29px;border-radius:15px;background:{{ timerTog.track }};border:1px solid {{ timerTog.border }};position:relative;cursor:pointer;transition:background .22s,border-color .22s">
+            <div style="position:absolute;top:2px;left:{{ timerTog.knob }};width:23px;height:23px;border-radius:50%;background:#faf6ee;box-shadow:0 1px 3px rgba(40,30,15,.32);transition:left .2s cubic-bezier(.33,1,.68,1)"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:1px;background:rgba(70,62,48,.1);margin:16px 0"></div>
+
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:600;color:#2b2924;letter-spacing:.5px;margin-bottom:4px">计时间隔<span style="font-size:12px;font-weight:400;color:#8a8273">（分钟）</span></div>
+          <div style="font-size:12px;color:#8a8273;line-height:1.6;max-width:210px">开计时器后只在页面开着时生效，会在后台默默消耗额度</div>
+        </div>
+        <div style="flex:0 0 auto;display:flex;align-items:center;gap:1px;padding:0 4px;border:1px solid rgba(70,62,48,.26);border-radius:19px;background:rgba(252,249,243,.62);box-shadow:0 1px 2px rgba(40,30,15,.07)">
+          <div onClick="{{ timerDec }}" style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b655a;cursor:pointer;user-select:none;transition:background .15s,transform .12s" style-active="background:rgba(70,62,48,.1);transform:scale(.9)">−</div>
+          <div style="min-width:34px;text-align:center;font-family:var(--disp);font-size:17px;color:#2b2924;line-height:1">{{ timerInterval }}</div>
+          <div onClick="{{ timerInc }}" style="width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#6b655a;cursor:pointer;user-select:none;transition:background .15s,transform .12s" style-active="background:rgba(70,62,48,.1);transform:scale(.9)">＋</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 三 · 调试 ===== -->
+    <div>
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px">
+        <div style="flex:0 0 auto;width:46px;height:46px;background:url(assets/brush/enso-red.png) center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center"><span style="position:relative;font-family:var(--disp);font-size:15px;color:#2b2924;transform:translate(-3.5px,-3.5px)">三</span></div>
+        <span style="font-family:var(--disp);font-size:20px;color:#2b2924;letter-spacing:2px;white-space:nowrap">勘验 · 调试</span>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(70,62,48,.3),rgba(70,62,48,0))"></div>
+        
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+          <div style="flex:1;min-width:0;font-size:15px;font-weight:600;color:#2b2924;letter-spacing:.5px;line-height:1.45">显示发给每个角色的 prompt<br>＋ 谁 PASS 了</div>
+          <div onClick="{{ debugTog.toggle }}" style="flex:0 0 auto;width:52px;height:29px;border-radius:15px;background:{{ debugTog.track }};border:1px solid {{ debugTog.border }};position:relative;cursor:pointer;transition:background .22s,border-color .22s">
+            <div style="position:absolute;top:2px;left:{{ debugTog.knob }};width:23px;height:23px;border-radius:50%;background:#faf6ee;box-shadow:0 1px 3px rgba(40,30,15,.32);transition:left .2s cubic-bezier(.33,1,.68,1)"></div>
+          </div>
+        </div>
+        <div style="font-size:12.5px;color:#7a7263;line-height:1.6;margin-top:9px">用来核对「角色隔离」与上下文压缩效果。</div>
+      </div>
+    </div>
+
+    <!-- ===== 四 · 角色关系记忆 ===== -->
+    <div>
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:13px">
+        <div style="flex:0 0 auto;width:46px;height:46px;background:url(assets/brush/enso-red.png) center/100% 100% no-repeat;display:flex;align-items:center;justify-content:center"><span style="position:relative;font-family:var(--disp);font-size:15px;color:#2b2924;transform:translate(-3.5px,-3.5px)">四</span></div>
+        <span style="font-family:var(--disp);font-size:20px;color:#2b2924;letter-spacing:2px;white-space:nowrap">心相 · 记忆</span>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,rgba(70,62,48,.3),rgba(70,62,48,0))"></div>
+        
+      </div>
+      
+
+      <div style="display:flex;flex-direction:column;gap:17px">
+        <sc-for list="{{ memories }}" as="m" hint-placeholder-count="5">
+          <div>
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+              <div style="flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:{{ m.grad }};border:1px solid rgba(70,62,48,.28);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:16px;color:{{ m.color }};box-shadow:0 1px 2px rgba(40,30,15,.1)">{{ m.key }}</div>
+              <span style="font-family:var(--disp);font-size:17px;font-weight:600;color:{{ m.color }};letter-spacing:1px">{{ m.name }}</span>
+              <div style="flex:1;height:1px;background:linear-gradient(90deg,{{ m.rule }},rgba(70,62,48,0))"></div>
+            </div>
+            <textarea value="{{ m.text }}" onChange="{{ m.onText }}" rows="3" style="width:100%;border:1px solid {{ m.fieldBorder }};border-radius:12px;background:rgba(252,249,243,.62);padding:11px 13px;font-size:14px;color:#2b2924;line-height:1.7;letter-spacing:.3px;outline:none;resize:vertical;box-shadow:inset 0 1px 2px rgba(40,30,15,.05)" style-focus="border-color:{{ m.color }};background:rgba(255,253,248,.85)"></textarea>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- 收存 -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:11px;margin-top:4px">
+      <div onClick="{{ onSave }}" style="display:flex;align-items:center;gap:8px;padding:8px 22px;border-radius:18px;border:1.2px solid rgba(70,62,48,.42);background:rgba(252,249,243,.55);cursor:pointer;box-shadow:0 1px 3px rgba(40,30,15,.1);transition:transform .16s cubic-bezier(.34,1.4,.64,1),box-shadow .2s,background .2s" style-active="transform:scale(.96);box-shadow:0 1px 2px rgba(40,30,15,.08);background:rgba(248,243,233,.7)">
+        <span style="font-family:var(--disp);font-size:15px;color:#2b2924;letter-spacing:3px" data-comment-anchor="68d873fd7b-span">保存</span>
+      </div>
+      <sc-if value="{{ saved }}"><span style="display:inline-flex;align-items:center;gap:7px;font-size:12px;color:{{ sealBg }};letter-spacing:2px;animation:saveRise .42s cubic-bezier(.33,1,.68,1) both"><span style="display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:5px;background:{{ sealBg }};color:#faf6ee;font-size:10px;line-height:1;animation:sealPop .52s cubic-bezier(.34,1.56,.64,1) both">✓</span>已收入袖中</span></sc-if>
+    </div>
+
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:900},&quot;backIcon&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;素箭·细&quot;,&quot;尖角·钩&quot;,&quot;回纹·钩&quot;,&quot;墨撇·锋&quot;],&quot;default&quot;:&quot;素箭·细&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;fontScheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;思源宋·端方&quot;,&quot;思源黑·素雅&quot;,&quot;仿宋·清峻&quot;],&quot;default&quot;:&quot;思源宋·端方&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;sealColor&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;朱砂红&quot;,&quot;松烟墨&quot;,&quot;石青&quot;],&quot;default&quot;:&quot;朱砂红&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;bgDim&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:0.9,&quot;min&quot;:0.4,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = {
+    recentWindow: 20,
+    comboSecond: true,
+    comboLimit: 3,
+    autoTimer: false,
+    timerInterval: 60,
+    debugPrompt: false,
+    memories: {
+      '尊': '你偏袒小师妹却从不承认；近来她总跟旁人嬉闹，你心里发紧，又骂自己不该有这种念头。',
+      '兄': '你看似最疼小师妹，其实在不动声色地试探她的底细，也乐见旁人为她争风吃醋。',
+      '姐': '你说不出在意，于是默默给小师妹改护身机关；旁人对她献殷勤时你会莫名想拆点东西。',
+      '剑': '你视小师妹为本座的所有物；她对别人笑、被别人接近，都让你醋意翻涌、想当场立规矩。',
+      '侠': '你跟小师妹最像狐朋狗友，爱起哄拱火；真有人惹她你会立刻跳出来，但绝不承认自己上心。',
+    },
+    saved: false,
+  };
+
+  memberMeta = [
+    { key: '尊', name: '师尊', color: '#43507a', grad: 'linear-gradient(160deg,#dee2ec,#bcc3d8)' },
+    { key: '兄', name: '师兄', color: '#2f6d6b', grad: 'linear-gradient(160deg,#d8e6e2,#bcd6d0)' },
+    { key: '姐', name: '师姐', color: '#5b517a', grad: 'linear-gradient(160deg,#e4e0ea,#c8c0d6)' },
+    { key: '剑', name: '剑灵', color: '#9a4350', grad: 'linear-gradient(160deg,#ecdcd9,#d9b9b3)' },
+    { key: '侠', name: '游侠', color: '#9a6a3a', grad: 'linear-gradient(160deg,#ece0cf,#dcc6a8)' },
+  ];
+
+  step(key, delta, min, max) {
+    this.setState((s) => {
+      let v = s[key] + delta;
+      if (v < min) v = min;
+      if (v > max) v = max;
+      return { [key]: v };
+    });
+  }
+  toggle(key) { this.setState((s) => ({ [key]: !s[key] })); }
+  setMemory(key, v) { this.setState((s) => ({ memories: { ...s.memories, [key]: v } })); }
+  onSave = () => { this.setState({ saved: true }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ saved: false }), 1700); };
+
+  hexA(hex, a) {
+    const n = hex.replace('#', '');
+    const r = parseInt(n.slice(0, 2), 16), g = parseInt(n.slice(2, 4), 16), b = parseInt(n.slice(4, 6), 16);
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  renderVals() {
+    const sealName = this.props.sealColor ?? '朱砂红';
+    const sealBg = sealName === '松烟墨' ? '#3a352d' : sealName === '石青' ? '#2f5d6b' : '#9a3b2c';
+
+    const fontName = this.props.fontScheme ?? '思源宋·端方';
+    const dispMap = {
+      '思源宋·端方': "'Noto Serif SC', 'Songti SC', 'STSong', 'PingFang SC', -apple-system, serif",
+      '思源黑·素雅': "'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif",
+      '仿宋·清峻': "'FangSong', 'STFangsong', '仿宋', 'Noto Serif SC', 'PingFang SC', serif",
+    };
+    const dispFont = dispMap[fontName] || dispMap['思源宋·端方'];
+
+    const tog = (on) => ({
+      on,
+      track: on ? sealBg : 'rgba(70,62,48,.16)',
+      border: on ? sealBg : 'rgba(70,62,48,.28)',
+      knob: on ? '26px' : '2px',
+    });
+
+    const memories = this.memberMeta.map((m) => ({
+      key: m.key, name: m.name, color: m.color, grad: m.grad,
+      rule: this.hexA(m.color, 0.4),
+      fieldBorder: this.hexA(m.color, 0.26),
+      text: this.state.memories[m.key] || '',
+      onText: (e) => this.setMemory(m.key, e.target.value),
+    }));
+
+    const backIcon = this.props.backIcon ?? '素箭·细';
+
+    return {
+      dispFont, sealBg, bgDim: this.props.bgDim ?? 0.9,
+      bk1: backIcon === '素箭·细', bk2: backIcon === '尖角·钩', bk3: backIcon === '回纹·钩', bk4: backIcon === '墨撇·锋',
+
+      recentWindow: this.state.recentWindow,
+      recentInc: () => this.step('recentWindow', 5, 5, 80),
+      recentDec: () => this.step('recentWindow', -5, 5, 80),
+
+      comboTog: { ...tog(this.state.comboSecond), toggle: () => this.toggle('comboSecond') },
+      comboLimit: this.state.comboLimit,
+      comboInc: () => this.step('comboLimit', 1, 1, 6),
+      comboDec: () => this.step('comboLimit', -1, 1, 6),
+
+      timerTog: { ...tog(this.state.autoTimer), toggle: () => this.toggle('autoTimer') },
+      timerInterval: this.state.timerInterval,
+      timerInc: () => this.step('timerInterval', 15, 15, 240),
+      timerDec: () => this.step('timerInterval', -15, 15, 240),
+
+      debugTog: { ...tog(this.state.debugPrompt), toggle: () => this.toggle('debugPrompt') },
+
+      memories,
+      saved: this.state.saved, onSave: this.onSave,
+    };
+  }
+}
+</script>
+</body>
+</html>

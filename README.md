@@ -2,6 +2,11 @@
 
 把设计系统打包成 [Claude Skill](https://code.claude.com/docs/en/skills)（官方 `SKILL.md` 规范）：AI 读取品牌规则、design tokens 与组件库之后，直接产出风格一致的界面和素材，而不是每次重新"猜"风格。
 
+<p align="center">
+  <img src="youshi-cream-paper/approve_card_design.gif" width="560" alt="ApprovalCard 盖章确认卡片动画">
+  <br><sub>盖章确认卡片 ApprovalCard（React）：纸片四拍入场 → 「祐」印抬起、盖下、留墨印 → 收拢成回执小票<br><a href="https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/components/agent/agent.card.html">▶ 在线试玩</a> · <a href="https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/approve_card_design.mp4">高清视频</a></sub>
+</p>
+
 本仓库收录两套完整的设计交付：
 
 | 目录 | 内容 | 形态 |

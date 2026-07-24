@@ -13,27 +13,12 @@
 
 所有 demo 均为纯静态页面 + CDN React 18，无需安装：
 
-**祐识 · React 组件卡**
-
 - [盖章确认卡片 ApprovalCard](https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/components/agent/agent.card.html) —— 四拍纸片入场（衬纸→主纸→贴纸→祐印），点「祐」印章：抬起、盖下、留墨印、收拢成回执小票
 - [表单组件 forms](https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/components/forms/forms.card.html) ·
   [展示组件 display](https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/components/display/display.card.html) ·
   [品牌组件 brand](https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/components/brand/brand.card.html) ·
   [导航组件 navigation](https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/components/navigation/navigation.card.html)
 - [youyou-codex 编码工作台](https://madebyyouyou.github.io/Design_System_as_a_Skill/youshi-cream-paper/ui_kits/youyou-codex/index.html) —— 整套 React ui_kit 示例（Sidebar / Composer / TaskScreen…）
-
-**修真界群聊游戏 UI 页面**
-
-- [灵讯群 · 会话页](https://madebyyouyou.github.io/Design_System_as_a_Skill/xiuzhen-game-ui/灵讯群.dc.html) ·
-  [搜索](https://madebyyouyou.github.io/Design_System_as_a_Skill/xiuzhen-game-ui/搜索.dc.html) ·
-  [设置](https://madebyyouyou.github.io/Design_System_as_a_Skill/xiuzhen-game-ui/设置.dc.html) ·
-  [气泡打磨](https://madebyyouyou.github.io/Design_System_as_a_Skill/xiuzhen-game-ui/气泡.dc.html)
-
-<table>
-<tr>
-<td align="center"><img src="xiuzhen-game-ui/screenshots/conv1.png" width="680" alt="灵讯群会话页设计稿"><br><sub>灵讯群 · 会话页设计稿（水墨群聊界面，在线 demo 见上方链接）</sub></td>
-</tr>
-</table>
 
 ## 1. 祐识 · 奶油宣纸（`youshi-cream-paper/`）
 
